@@ -11,12 +11,22 @@ class projection
 	object2d proj;
 	object2d project(object3d obj, vector<double> direction)
 	{
-		
+		object2d obj1;
+		int num_vertices = obj.vertices.size();
+		int num_edges = obj.edges.size();
+		for(int i = 0; i < num_vertices; i++)
+		{
+			obj1.vertices.push_back(project_v(obj.vertices[i]));
+		}
+		for(int i = 0;i < num_edges; i++)
+		{
+			obj1.edges.push_back(project_e(obj.edges[i]));
+		}
 	}
 	Vertex2d project_v(Vertex3d v, vector<double> direction)
 	{
 		///
-		/// Finds out the projection of a 3D vertex given a plane of projection
+		/// Finds out the projection of a 3D vertex given a plane of projection by rotating the plane to coincide it with x-y plane.
 		///	
 		Vertex2d v1;
 		Vertex3d v_copy = Vertex3d(v.x, v.y, v.z, v.name);
@@ -35,6 +45,9 @@ class projection
 
 	Edge2d project_e(Edge3d e, vector<double> direction)
 	{
+		///
+		/// 
+		///
 		Edge2d e1;
 		e1.v1 = project_v(e.v1, direction);
 		e1.v2 = project_v(e.v2, direction);
