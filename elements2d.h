@@ -33,8 +33,8 @@ class Edge2d
 {
 	public:
 	Vertex2d v1, v2;
-	int plane;
 	bool hidden;
+	// data of which plane?
 	void translate(int direction, float value)
 	{
 		//direction 1->x 2->y 3->z
