@@ -1,6 +1,6 @@
 #ifndef THREED_H
 #define THREED_H
-#include "elements3d.H"
+#include "elements3d.h"
 #endif
 
 #include <iostream>

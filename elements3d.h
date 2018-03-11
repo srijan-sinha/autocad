@@ -1,9 +1,11 @@
+#include <string>
+using namespace std;
 
 class Vertex3d
 {
 	public:
 	float x, y, z;
-	char name[64];
+	string name;
 	public:
 	Vertex3d(int x_c, int y_c, int z_c){x = x_c; y = y_c; z = z_c;}
 	Vertex3d(){ x = 0; y = 0; z = 0;}
@@ -80,4 +82,5 @@ class object3d
 	Vertex3d vertices[100];
 	Edge3d edges[100];
 	Surface3d surfaces[100];
-}
+};
+

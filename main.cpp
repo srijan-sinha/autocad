@@ -5,7 +5,7 @@
 
 #ifndef IO_H
 #define IO_H
-#include <iostream.h>
+#include <iostream>
 #endif
 
 #include "input2d.h"

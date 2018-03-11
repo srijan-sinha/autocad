@@ -1,16 +1,32 @@
+#include <string>
+using namespace std;
+
 class Vertex2d
 {
 	public:
-	float c1, c2;
+	float x, y, z;
 	int plane; //1->x-y 2->y-z 3->z-x
-	char name[64];
-	// public:
+	string name;
+
 	Vertex2d(int first, int second){}
 	Vertex2d(int arr[]){}
-	void translate(int direction, int units){}
-	void mirror(int plane){}
-	void rotate(int direction, int degrees){}
-	void scale(float factor){}
+	Vertex2d(){}
+	void translate(int direction, int units)
+	{
+
+	}
+	void mirror(int plane)
+	{
+
+	}
+	void rotate(int direction, int degrees)
+	{
+
+	}
+	void scale(float factor)
+	{
+
+	}
 };
 
 class Edge2d
@@ -42,4 +58,5 @@ class object2d
 	public:
 	Vertex2d vertices[100];
 	Edge2d edges[100];
-}
+};
+
