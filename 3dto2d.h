@@ -18,13 +18,19 @@ class projection
 		///
 		/// Finds out the projection of a 3D vertex given a plane of projection
 		///	
+		Vertex2d v1;
+		Vertex3d v_copy = Vertex3d(v.x, v.y, v.z, v.name);
 		double angle = rotation_angle(direction);
 		vector<double> rot_axis;
 		rot_axis.push_back(direction[1]);
 		rot_axis.push_back(-1 * direction[0]);
 		rot_axis.push_back(0);
-		v.rotate(rot_axis, angle);
-		v.z = 0;
+		v_copy.rotate(rot_axis, angle);
+		v1.x = v_copy.x;
+		v1.y = v_copy.y;
+		v1.z = 0;
+		v1.name = v_copy.name;
+		return v1;
 	}
 
 	Edge2d project_e(Edge3d e, vector<double> direction)
@@ -33,8 +39,9 @@ class projection
 		e1.v1 = project_v(e.v1, direction);
 		e1.v2 = project_v(e.v2, direction);
 		e1.hidden = false;
+		return e1;
 	}
-	theta rotation_angle(vector<double> direction)
+	double rotation_angle(vector<double> direction)
 	{
 		double a = direction[0];
 		double b = direction[1];

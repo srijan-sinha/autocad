@@ -4,8 +4,7 @@ using namespace std;
 class Vertex2d
 {
 	public:
-	float x, y, z;
-	int plane; //1->x-y 2->y-z 3->z-x
+	double x, y, z;
 	string name;
 
 	Vertex2d(int first, int second){}

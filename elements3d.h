@@ -9,10 +9,10 @@ using namespace std;
 class Vertex3d
 {
 	public:
-	float x, y, z;
+	double x, y, z;
 	string vertex_name;
 	public:
-	Vertex3d(int x_c, int y_c, int z_c, string name)
+	Vertex3d(double x_c, double y_c, double z_c, string name)
 	{
 		x = x_c;
 		y = y_c;
