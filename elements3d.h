@@ -166,11 +166,13 @@ class Edge3d
 {
 	public:
 	Vertex3d v1, v2;
+	string name;
 	public:
-	Edge3d (Vertex3d v1_c, Vertex3d v2_c)
+	Edge3d (Vertex3d v1_c, Vertex3d v2_c, string e_name)
 	{
 		v1 = v1_c;
 		v2 = v2_c;
+		name = v1_c.name + v2_c.name;	
 	}
 	void translate(vector<double> direction, double value)
 	{

@@ -5,7 +5,9 @@ using namespace std;
 class Vertex2d
 {
 	public:
+	Vertex3d proj_of;
 	double x, y, z;
+	double length;
 	string name;
 
 	Vertex2d(int first, int second, int third, string name_c)
@@ -65,12 +67,14 @@ class Edge2d
 {
 	public:
 	Vertex2d v1, v2;
+	Edge3d proj_of;
 	bool hidden;
 	// data of which plane?
 	Edge2d (Vertex2d v1_c, Vertex2d v2_c)
 	{
 		v1 = v1_c;
 		v2 = v2_c;
+		hidden = false;
 	}
 	Edge2d(){}
 	void translate(int direction, float value)
