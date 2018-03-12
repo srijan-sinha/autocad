@@ -2,6 +2,7 @@
 #include "elements3d.h"
 #include "eigen3/Eigen/Dense"
 #include <math.h>
+#include <vector>
 using namespace std;
 
 class projection
@@ -18,11 +19,11 @@ class projection
 		int num_edges = obj.edges.size();
 		for(int i = 0; i < num_vertices; i++)
 		{
-			obj1.vertices.push_back(project_v(obj.vertices[i]));
+			obj1.vertices.push_back(project_v(obj.vertices[i], direction));
 		}
 		for(int i = 0;i < num_edges; i++)
 		{
-			obj1.edges.push_back(project_e(obj.edges[i]));
+			obj1.edges.push_back(project_e(obj.edges[i], direction));
 		}
 	}
 	Vertex2d project_v(Vertex3d v, vector<double> direction)
@@ -64,7 +65,7 @@ class projection
 		double s2 = (a*a) + (b*b) + (c*c);
 		double s = sqrt(s2);
 		double costheta = c / s;
-		double theta = arccosine(costheta);
+		double theta = acos(costheta);
 		return theta;
 	}
 
@@ -78,11 +79,12 @@ class projection
 			{
 				Edge2d e2 = s.edges[j];
 				intersec_vertex.push_back(e1.v1);
-				if (e1 != e2)
-				{
+
+				// if (e1 != e2)
+				// {
 					intersection(e1,e2);
 
-				}
+				// }
 			}
 			intersec_vertex.push_back(e1.v2);
 			for (int i = 0; i < intersec_vertex.size()-1; ++i)

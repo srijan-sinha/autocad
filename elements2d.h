@@ -1,4 +1,5 @@
 #include <string>
+#include <vector>
 using namespace std;
 
 class Vertex2d
@@ -34,6 +35,12 @@ class Edge2d
 	Vertex2d v1, v2;
 	bool hidden;
 	// data of which plane?
+	Edge2d (Vertex2d v1_c, Vertex2d v2_c)
+	{
+		v1 = v1_c;
+		v2 = v2_c;
+	}
+	Edge2d(){}
 	void translate(int direction, float value)
 	{
 		//direction 1->x 2->y 3->z
@@ -55,7 +62,7 @@ class Edge2d
 class object2d
 {
 	public:
-	Vertex2d vertices[100];
-	Edge2d edges[100];
+	vector<Vertex2d> vertices;
+	vector<Edge2d> edges;
 };
 

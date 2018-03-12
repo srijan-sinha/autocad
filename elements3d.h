@@ -10,21 +10,21 @@ class Vertex3d
 {
 	public:
 	double x, y, z;
-	string vertex_name;
+	string name;
 	public:
-	Vertex3d(double x_c, double y_c, double z_c, string name)
+	Vertex3d(double x_c, double y_c, double z_c, string v_name)
 	{
 		x = x_c;
 		y = y_c;
 		z = z_c;
-		vertex_name = name;
+		name = v_name;
 	}
 	Vertex3d()
 	{
 	 	x = 0;
 	 	y = 0;
 	 	z = 0;
-	 	vertex_name = "";
+	 	name = "";
 	}
 	public: 
 
@@ -169,8 +169,8 @@ class Edge3d
 	public:
 	Edge3d (Vertex3d v1_c, Vertex3d v2_c)
 	{
-		v1=v1_c;
-		v2=v2_c;
+		v1 = v1_c;
+		v2 = v2_c;
 	}
 	void translate(vector<double> direction, double value)
 	{
@@ -213,25 +213,25 @@ class Surface3d
 	void translate(vector<double> direction, double value)
 	{
 		//direction 1->x 2->y 3->z
-		for (int i=0; i<edges.size(); i++)
+		for (int i = 0; i < edges.size(); i++)
        		edges[i].translate(direction, value);
 	}
 	void mirror(vector<double> plane)
 	{
 		//plane 1->x-y 2->y-z 3->z-x
-		for (int i=0; i<edges.size(); i++)
+		for (int i = 0; i < edges.size(); i++)
        		edges[i].mirror(plane);
 	}
 	void rotate(vector<double> direction, double radian)
 	{
 		//direction protocol same as translate, degrees always clockwise
-		for (int i=0; i<edges.size(); i++)
+		for (int i = 0; i < edges.size(); i++)
        		edges[i].rotate(direction, radian);
 	}
 	void scale(double factor)
 	{
 		//scales by input factor
-		for (int i=0; i<edges.size(); i++)
+		for (int i = 0; i < edges.size(); i++)
        		edges[i].scale(factor);
 	}
 };
