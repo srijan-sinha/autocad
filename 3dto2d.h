@@ -157,7 +157,7 @@ class projection
 			{
 				//intersection exist
 				cout<<"intersection"<<endl;
-				intersec_vertex.push_back(Vertex2d(x0,y0));
+				intersec_vertex.push_back(Vertex2d(x0,y0,0,""));
 				
 			}
 				
