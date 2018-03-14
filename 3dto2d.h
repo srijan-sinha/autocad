@@ -61,6 +61,24 @@ class projection
 		e1.proj_of = e;
 		return e1;
 	}
+
+	Surface2d project_s(Surface3d s)
+	{
+		///
+		///
+		///
+		Surface2d s1;
+		Edge3d e;
+		vector<Edge2d> edges;
+		for (int i = 0; i < s.edges.size(); i++)
+		{
+			edges.push_back(project_e(s.edges[i]));
+		}
+		s1.num_edges = s.num_edges;
+		s1.edges = edges;
+		return s1;
+	}
+
 	double rotation_angle()
 	{
 		double a = direction[0];
@@ -218,7 +236,7 @@ class projection
 			e.hidden = true;
 		else
 		{
-			if(inside(e, surface))
+			if(inside(e, project_S(surface)))
 				e.hidden = true;
 		}
 	}
@@ -242,8 +260,178 @@ class projection
 		return true;
 	}
 
-	bool inside(Edge2d e, Surface3d surface)
+	bool inside(Edge2d e, Surface2d surface)
 	{
+		if((position_vert(e.v1, surface) == 0) || (position_vert(e.v2, surface) == 0))
+			return false;
+		else if(position_vert(e.v1, surface)*position_vert(e.v2, surface) == 1)
+			return true;
+		else if(position_vert(e.v1, surface)*position_vert(e.v2, surface) == 2)
+			return true;
+		else
+		{
+			if(mid_check(e.v1, e.v2, surface) == 1)
+				return true;
+			else
+				return false;
+		}
+	}
 
+	int position_vert(Vertex2d v, Surface2d surface)
+	{
+		///
+		/// returns 0 if vert outside, 1 if inside, 2 if on the line
+		///
+		if(on_boundary(v, surface))
+			return 2;
+		else if(ray_casting(v, surface) % 2 == 1)
+			return 1;
+		else if(ray_casting(v, surface) % 2 == 0)
+			return 0;
+		else
+			cout << "Ray Casting Error" << endl;
+		return 0;
+	}
+
+	bool on_boundary(Vertex2d v, Surface2d surface)
+	{
+		for (int i = 0; i < num_edges; i++)
+		{
+			if(on_edge(v, surface.edges[i]))
+				return true;
+		}
+		return false;
+	}
+
+	bool on_edge(Vertex2d v, Edge2d e)
+	{
+		double x1 = e.v1.x;
+		double y1 = e.v1.y;
+		double x2 = e.v2.x;
+		double y2 = e.v2.y;
+		double d1 = sqrt((x-x1)*(x-x1) + (y-y1)*(y-y1));
+		double d2 = sqrt((x-x2)*(x-x2) + (y-y2)*(y-y2));
+		double d = 	sqrt((x2-x1)*(x2-x1) + (y2-y1)*(y2-y1));
+		if(d1 + d2 == d)
+			return true;
+		return false;
+
+	}
+
+	int ray_casting(Vertex2d v, Surface2d surface)
+	{
+		int count = 0;
+		count = count + poly_vert(v, surface);
+		count = count + coincident_edge(v, surface);
+		count = count + edge_intersect(v, surface);
+		return count;
+	}
+
+	int poly_vertex(Vertex2d v, Surface2d surface)
+	{
+		int count = 0;
+		for (int i = 0; i < surface.num_edges; i++)
+		{
+			if((surface.edges[i].v1.y == v.y) && (surface.edges[i].v2.y != v.y))
+				count = count + check_side(surface.edges[i].v1, surface);
+			else if((surface.edges[i].v2.y == v.y) && (surface.edges[i].v1.y) != v.y)
+				count = count + check_side(surface.edges[i].v2, surface);
+		}
+		return (count / 2);
+	}
+
+	int coincident_edge(Vertex2d v, Surface2d surface)
+	{
+		int count = 0;
+		for (int i = 0; i < surface.num_edges; i++)
+		{
+			if((surface.edges[i].v1.y == v.y) && (surface.edges[i].v2.y == v.y))
+			{
+				count = count + check_side_edge(surface.edges[i], surface);
+			}
+		}
+		return count;
+	}
+
+	int edge_intersect(Vertex2d v, Surface2d surface)
+	{
+		int count = 0;
+		for (int i = 0; i < surface.num_edges; i++)
+		{
+			if((surface.edges[i].v1.y > v.y) && (surface.edges[i].v2.y < v.y))
+				count = count + 1;
+			else if((surface.edges[i].v1.y < v.y) && (surface.edges[i].v2.y > v.y))
+				count = count + 1;
+		}
+		return count;
+	}
+
+	int check_side_vert(Vertex2d v, Surface2d surface)
+	{
+		vector<int> y;
+		for (int i = 0; i < surface.num_edges; i++)
+		{
+			if((surface.edges[i].v1.x == v.x) && (surface.edges[i].v1.y == v.y))
+				y.push_back(v2.y);
+			else if((surface.edges[i].v2.x == v.x) && (surface.edges[i].v2.y == v.y))
+				y.push_back(v1.y);
+		}
+		if(y.size() != 2)
+			cout << "Error check_side_vert" << endl;
+		if ((y[0] - v.y)*(y[1] - v.y) < 0)
+			return 1;
+	}
+
+	int check_side_edge(Edges2d e, Surface2d surface)
+	{
+		Vertex2d v1;
+		Vertex2d v2;
+		vector<int> y;
+		v1.x = e.v1.x;
+		v1.y = e.v1.y;
+		v2.x = e.v2.x;
+		v2.y = e.v2.y;
+
+		Edge2d e1;
+		for (int i = 0; i < surface.num_edges; i++)
+		{
+			e1 = surface.edges[i];
+			if((e1.v1.x == v1.x) && (e1.v1.y == v1.y))
+			{
+				if(!((e1.v2.x == v2.x) && (e1.v2.y == v2.y)))
+					y.push_back(v2.y);
+			}
+			else if((e1.v1.x == v2.x) && (e1.v1.y == v2.y))
+			{
+				if(!((e1.v2.x == v1.x) && (e1.v2.y == v1.y)))
+					y.push_back(v1.y);
+			}
+			else if((e1.v2.x == v2.x) && (e1.v2.y == v2.y))
+			{
+				if(!((e1.v1.x == v1.x) && (e1.v1.y == v1.y)))
+					y.push_back(v1.y);
+			}
+			else if((e1.v2.x == v1.x) && (e1.v2.y == v1.y))
+			{
+				if(!((e1.v1.x == v2.x) && (e1.v1.y == v2.y)))
+					y.push_back(v1.y);
+			}
+		}
+		if(y.size() != 2)
+			cout << "Error check_side_edge" << endl;
+		if((y[0] - v1.y)*(y[1] - v1.y) < 0)
+			return 1;
+	}
+
+	mid_check(Vertex2d v1, Vertex2d v2, Surface2d surface)
+	{
+		///
+		/// returns the location of mid-point of v1 and v2
+		///
+		Vertex2d v;
+		v.x = (v1.x + v2.x)/2;
+		v.y = (v1.y + v2.y)/2;
+		v.z = (v1.z + v2.z)/2;
+		return position_vert(v, surface);
 	}
 };

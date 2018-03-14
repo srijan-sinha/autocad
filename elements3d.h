@@ -31,7 +31,7 @@ class Vertex3d
 	void translate(vector<double> direction, double value)
 	{
 		//direction 1->x 2->y 3->z
-		cout<<"direction vector: "<<endl;
+		cout << "direction vector: " << endl;
 		for (int i=0; i<direction.size(); i++)
        		cout << direction[i] << " ";
 
@@ -49,11 +49,11 @@ class Vertex3d
 	    p(0,0) = x;
 	    p(1,0) = y;
 	    p(2,0) = z;
-	    cout<<"initial matrix: "<<endl;
+	    cout << "initial matrix: " << endl;
 	    cout << p << endl;
 	    
 	    MatrixXd P = T + p;
-	    cout<<"final matrix: "<<endl;
+	    cout << "final matrix: " << endl;
 	    cout << P << endl;
 
 	    x = P(0,0);
@@ -63,7 +63,7 @@ class Vertex3d
 	void mirror(vector<double> plane)
 	{
 		//plane 1->x-y 2->y-z 3->z-x
-		cout<<"direction vector: "<<endl;
+		cout << "direction vector: " << endl;
 		for (int i=0; i<plane.size(); i++)
        		cout << plane[i] << " ";
 
@@ -90,7 +90,7 @@ class Vertex3d
 	    R(3,2) = 0;
 	    R(2,3) = -1*2*c*d;
 	    R(3,3) = 0;
-	    cout<<"Reflection matrix: "<<endl;
+	    cout << "Reflection matrix: " << endl;
 	    cout << R << endl;
 	    
 	    MatrixXd p(4,1);
@@ -98,11 +98,11 @@ class Vertex3d
 	    p(1,0) = y;
 	    p(2,0) = z;
 	    p(3,0) = 1;
-	    cout<<"initial matrix: "<<endl;
+	    cout << "initial matrix: " << endl;
 	    cout << p << endl;
 	    
 	    MatrixXd P = R*p;
-	    cout<<"final matrix: "<<endl;
+	    cout << "final matrix: " << endl;
 	    cout << P << endl;
 
 	    x = P(0,0);
@@ -113,13 +113,13 @@ class Vertex3d
 	void rotate(vector<double> direction, double radian)
 	{
 		//direction protocol same as translate, degrees always clockwise
-		cout<<"direction vector: "<<endl;
+		cout << "direction vector: " << endl;
 		for (int i=0; i<direction.size(); i++)
        		cout << direction[i] << " ";
 
        	double sinx = sin(radian);
        	double cosx = cos(radian);
-       	cout<<endl<<"sinx and cosx :"<<sinx<<" "<<cosx<<endl;
+       	cout << endl << "sinx and cosx :" << sinx << " " << cosx << endl;
        	double u = direction[0]*direction[0] + direction[1]*direction[1] + direction[2]*direction[2];
        	double u_x = direction[0] / sqrt(u);
        	double u_y = direction[1] / sqrt(u);
@@ -135,18 +135,18 @@ class Vertex3d
 	    R(2,1) = u_z*u_y*(1-cosx) + u_x*sinx;
 	    R(1,2) = u_z*u_y*(1-cosx) - u_x*sinx;
 	    R(2,2) = cosx + (u_z*u_z)*(1-cosx);
-	    cout<<"Rotation matrix: "<<endl;
+	    cout << "Rotation matrix: " << endl;
 	    cout << R << endl;
 	    
 	    MatrixXd p(3,1);
 	    p(0,0) = x;
 	    p(1,0) = y;
 	    p(2,0) = z;
-	    cout<<"initial matrix: "<<endl;
+	    cout << "initial matrix: " << endl;
 	    cout << p << endl;
 	    
 	    MatrixXd P = R*p;
-	    cout<<"final matrix: "<<endl;
+	    cout << "final matrix: " << endl;
 	    cout << P << endl;
 
 	    x = P(0,0);
@@ -246,7 +246,7 @@ class object3d
 	vector<Surface3d> surfaces;
 	object3d(vector<Vertex3d> vertices_c, vector<Edge3d> edges_c, vector<Surface3d> surfaces_c)
 	{
-		vertices=vertices_c;
+		vertices = vertices_c;
 		edges = edges_c;
 		surfaces = surfaces_c;
 	}

@@ -23,7 +23,7 @@ class Vertex2d
 	}
 	void translate(vector<double> direction, double units)
 	{
-		cout<<"direction vector: "<<endl;
+		cout << "direction vector: " << endl;
 		for (int i=0; i<direction.size(); i++)
        		cout << direction[i] << " ";
 
@@ -38,11 +38,11 @@ class Vertex2d
        	MatrixXd p(2,1);
 	    p(0,0) = x;
 	    p(1,0) = y;
-	    cout<<"initial matrix: "<<endl;
+	    cout << "initial matrix: " << endl;
 	    cout << p << endl;
 	    
 	    MatrixXd P = T + p;
-	    cout<<"final matrix: "<<endl;
+	    cout << "final matrix: " << endl;
 	    cout << P << endl;
 
 	    x = P(0,0);
@@ -95,10 +95,23 @@ class Edge2d
 	}
 };
 
+class Surface2d
+{
+public:
+	int num_edges;
+	vector<Edge2d> edges;
+	Surface2d(vector<Edge2d> edges_c, int num_edges_c)
+	{	
+		edges = edges_c;
+		num_edges = num_edges_c;
+	}
+	//Add functionalities.
+};
+
 class object2d
 {
 	public:
 	vector<Vertex2d> vertices;
 	vector<Edge2d> edges;
+	vector<Surface2d> surfaces;
 };
-
