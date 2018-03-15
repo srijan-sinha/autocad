@@ -8,14 +8,18 @@ class Vertex2d
 	Vertex3d proj_of;
 	double x, y, z;
 	double length;
-	string name;
+	vector<char> name;
 
 	Vertex2d(int first, int second, int third, string name_c)
 	{
 		x = first;
 		y = second;
 		z = third;
-		name = name_c;
+		
+		for (int i = 0; i < name_c.length(); ++i)
+		{
+			name.push_back(name_c.at(i));
+		}
 	}
 	Vertex2d()
 	{
@@ -76,7 +80,10 @@ class Edge2d
 		v2 = v2_c;
 		hidden = false;
 	}
-	Edge2d(){}
+	Edge2d()
+	{
+
+	}
 	void translate(int direction, float value)
 	{
 		//direction 1->x 2->y 3->z
