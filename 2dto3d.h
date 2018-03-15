@@ -114,27 +114,5 @@ class rev_3dto2d
 		return -1;
 	}
 
-	void vertex_filter(object3d obj)
-	{
-		Vertex3d vert = obj.vertices;
-		Edge3d edge = obj.edges;
-		for (int i = 0; i < vert.size() ; ++i)
-		{
-			int c=0;
-			for (int j = 0; j < edge.size(); ++j)
-			{
-				if (check_equal(edge[j].v1,vert[i]) || check_equal(edge[j].v2,vert[i]))
-					c=c+1;
-			}
-			if (c>=3)
-				cout<<"correct Vertex coord: "<<vert[i].x<<" "<<vert[i].y<<" "<<vert[i].z;
-			else
-			{
-				cout<<"wrong Vertex coord: "<<vert[i].x<<" "<<vert[i].y<<" "<<vert[i].z;
-				remove(vert.begin(),vert.end(),vert[i]);
-			}
-		}
-		obj.vertices = vert;
 	
-	}
 }
