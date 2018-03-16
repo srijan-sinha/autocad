@@ -18,13 +18,14 @@ class Vertex3d
 		y = y_c;
 		z = z_c;
 		name = v_name;
+		
 	}
 	Vertex3d()
 	{
 	 	x = 0;
 	 	y = 0;
 	 	z = 0;
-	 	name = "";
+	 	
 	}
 	public: 
 
@@ -172,7 +173,11 @@ class Edge3d
 	{
 		v1 = v1_c;
 		v2 = v2_c;
-		name = v1_c.name + v2_c.name;	
+		name = v1_c.name[0] + v2_c.name[0];	
+	}
+	Edge3d()
+	{
+
 	}
 	void translate(vector<double> direction, double value)
 	{
