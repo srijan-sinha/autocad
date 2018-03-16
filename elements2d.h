@@ -8,18 +8,14 @@ class Vertex2d
 	Vertex3d proj_of;
 	double x, y, z;
 	double length;
-	vector<char> name;
+	string name;
 
 	Vertex2d(int first, int second, int third, string name_c)
 	{
 		x = first;
 		y = second;
 		z = third;
-		
-		for (int i = 0; i < name_c.length(); ++i)
-		{
-			name.push_back(name_c.at(i));
-		}
+		name = name_c;
 	}
 	Vertex2d()
 	{
@@ -73,6 +69,7 @@ class Edge2d
 	Vertex2d v1, v2;
 	Edge3d proj_of;
 	bool hidden;
+	string name;
 	// data of which plane?
 	Edge2d (Vertex2d v1_c, Vertex2d v2_c)
 	{
