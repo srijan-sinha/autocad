@@ -34,7 +34,7 @@ class rev_3dto2d
 				v.x = v1[i].x;
 				v.y = v1[i].y;
 				v.z = set3[j].z;
-				v.name = v1.name;
+				v.name = v1[i].name;
 				v2.push_back(v);
 			}
 		}
@@ -69,8 +69,8 @@ class rev_3dto2d
 				if (i!=j)
 				{
 					Vertex3d s2 = vert[j];
-					Edge3d e = Edge3d(s1,s2);
-					Edge2d e_xy = project_e(e, x_y);
+					Edge3d e = Edge3d(s1,s2,"");
+					/*Edge2d e_xy = project_e(e, x_y);
 					int index_xy = find_edge(obj1.edges, e_xy);
 					Edge2d e_yz = project_e(e, y_z);
 					int index_yz = find_edge(obj2.edges, e_yz);
@@ -83,7 +83,7 @@ class rev_3dto2d
 						e.v1 = s1;
 						e.v2 = s2;
 						v.push_back(e);
-					}
+					}*/
 				}
 			}
 		}
@@ -107,7 +107,7 @@ class rev_3dto2d
 		for (int i = 0; i < set.size(); ++i)
 		{
 			string s1 = set[i].name; 
-			if ((s1.compare(s.name)) && (set[i].v1 = s.v1) && (set[i].v2 = s.v2))  
+			//if ((s1.compare(s.name)) && (set[i].v1 == s.v1) && (set[i].v2 == s.v2))  
 				return i;
 
 		}
