@@ -109,6 +109,10 @@ public:
 		edges = edges_c;
 		num_edges = num_edges_c;
 	}
+	Surface2d()
+	{
+		
+	}
 	//Add functionalities.
 };
 

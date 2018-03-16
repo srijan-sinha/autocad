@@ -1,11 +1,12 @@
 #include "elements3d.h"
 #include "elements2d.h"
 #include "2dto3d.h"
-#include "3dto2d.h"
+//#include "3dto2d.h"
 #include<iostream>
 using namespace std;
 int main()
 {
+	cout<<"*******************************testing 2dto3d vertex forming"<<endl;
 	
 	Vertex2d v1 = Vertex2d(0,0,0,"A");
 	cout<<"Vertex2d ";
@@ -319,5 +320,60 @@ int main()
 	{
 		cout<<vi[i].x<<","<<vi[i].y<<","<<vi[i].z<<endl;
 	}
+
+	cout<<"*******************************testing 3dto2d projection"<<endl;
+	Vertex3d v3_1 = Vertex3d(0,0,0,"A");
+	Vertex3d v3_2 = Vertex3d(2,0,0,"B");
+	Vertex3d v3_3 = Vertex3d(0,2,0,"C");
+	Vertex3d v3_4 = Vertex3d(2,2,0,"D");
+	Vertex3d v3_5 = Vertex3d(1,1,2,"E");
+	Edge3d e3_1 = Edge3d(v3_1,v3_2);
+	Edge3d e3_2 = Edge3d(v3_2,v3_3);
+	Edge3d e3_3 = Edge3d(v3_3,v3_4);
+	Edge3d e3_4 = Edge3d(v3_4,v3_1);
+	Edge3d e3_5 = Edge3d(v3_1,v3_5);
+	Edge3d e3_6 = Edge3d(v3_2,v3_5);
+	Edge3d e3_7 = Edge3d(v3_3,v3_5);
+	Edge3d e3_8 = Edge3d(v3_4,v3_5);
+	projection p;
+	p.solid.vertices.push_back(v3_1);
+	p.solid.vertices.push_back(v3_2);
+	p.solid.vertices.push_back(v3_3);
+	p.solid.vertices.push_back(v3_4);
+	p.solid.vertices.push_back(v3_5);
+	p.solid.edges.push_back(e3_1);
+	p.solid.edges.push_back(e3_2);
+	p.solid.edges.push_back(e3_3);
+	p.solid.edges.push_back(e3_4);
+	p.solid.edges.push_back(e3_5);
+	p.solid.edges.push_back(e3_6);
+	p.solid.edges.push_back(e3_7);
+	p.solid.edges.push_back(e3_8);
+	vector<double> x_y;
+	vector<double> y_z;
+	vector<double> x_z;
+
+	x_y.push_back(0);
+	x_y.push_back(0);
+	x_y.push_back(1);
+
+	y_z.push_back(1);
+	y_z.push_back(0);
+	y_z.push_back(0);
+	
+	x_z.push_back(0);
+	x_z.push_back(1);
+	x_z.push_back(0);
+	p.direction = x_y;
+	
+	p.project();
+	
+	object2d proje = p.proj;
+	cout<<proje.vertices.size();
+	for (int i = 0; i < proje.vertices.size(); ++i)
+	{
+		cout<<proje.vertices[i].x<<" "<<proje.vertices[i].y<<" "<<proje.vertices[i].z<<endl;
+
+	}
 	return 0;
-}
+};

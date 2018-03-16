@@ -1,5 +1,6 @@
 //#include "elements2d.h"
 //#include "elements3d.h"
+#include "3dto2d.h"
 
 class rev_3dto2d
 {
@@ -96,12 +97,15 @@ class rev_3dto2d
 				{
 					Vertex3d s2 = vert[j];
 					projection p;
-					Edge3d e = Edge3d(s1,s2,"");
-					Edge2d e_xy = p.project_e(e, x_y);
+					Edge3d e = Edge3d(s1,s2);
+					p.direction = x_y;
+					Edge2d e_xy = p.project_e(e);
 					int index_xy = find_edge(obj1.edges, e_xy);
-					Edge2d e_yz = p.project_e(e, y_z);
+					p.direction = y_z;
+					Edge2d e_yz = p.project_e(e);
 					int index_yz = find_edge(obj2.edges, e_yz);
-					Edge2d e_xz = p.project_e(e, x_z);
+					p.direction = x_z;
+					Edge2d e_xz = p.project_e(e);
 					int index_xz = find_edge(obj3.edges, e_xz);
 					if (!(index_xz == -1 || index_yz == -1 || index_xy == -1))
 					{
