@@ -1,5 +1,5 @@
-#include "elements2d.h"
-#include "elements3d.h"
+//#include "elements2d.h"
+//#include "elements3d.h"
 #include "eigen3/Eigen/Dense"
 #include <math.h>
 #include <vector>
@@ -10,7 +10,7 @@ class projection
 	public:
 	object3d solid;
 	object2d proj;
-	vector<double> direction
+	vector<double> direction;
 	// vector<Vertex2d> intersec_vertex;
 	
 	void project()

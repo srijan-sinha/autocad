@@ -1,7 +1,7 @@
 #include "elements3d.h"
 #include "elements2d.h"
 #include "2dto3d.h"
-//#include "3dto2d.h"
+#include "3dto2d.h"
 #include<iostream>
 using namespace std;
 int main()
@@ -40,7 +40,7 @@ int main()
 	cout<<" x: "<<vr2.x<<" y: "<<vr2.y<<" z: "<<vr2.z<<endl;
 
 //-------------------------------------
-	Vertex2d v3 = Vertex2d(0,1,0,"EH");
+	Vertex2d v3 = Vertex2d(0,1,0,"H");
 	cout<<"Vertex2d ";
 	for (int i = 0; i < v3.name.size(); ++i)
 	{
@@ -48,7 +48,7 @@ int main()
 	}
 	cout<<" x: "<<v3.x<<" y: "<<v3.y<<" z: "<<v3.z<<endl;
 	
-	Vertex2d vr3 = Vertex2d(0,1,0,"EH");
+	Vertex2d vr3 = Vertex2d(0,1,0,"E");
 	cout<<"Vertex2d ";
 	for (int i = 0; i < vr3.name.size(); ++i)
 	{
@@ -58,7 +58,7 @@ int main()
 
 //-----------------------------------------
 	
-	Vertex2d v4 = Vertex2d(1,1,0,"FG");
+	Vertex2d v4 = Vertex2d(1,1,0,"F");
 	cout<<"Vertex2d ";
 	for (int i = 0; i < v4.name.size(); ++i)
 	{
@@ -66,7 +66,7 @@ int main()
 	}
 	cout<<" x: "<<v4.x<<" y: "<<v4.y<<" z: "<<v4.z<<endl;
 	
-	Vertex2d vr4 = Vertex2d(1,1,0,"FG");
+	Vertex2d vr4 = Vertex2d(1,1,0,"G");
 	cout<<"Vertex2d ";
 	for (int i = 0; i < vr4.name.size(); ++i)
 	{
@@ -214,7 +214,7 @@ int main()
 
 
 
-	Vertex2d vee1 = Vertex2d(0,0,0,"EA");
+	Vertex2d vee1 = Vertex2d(0,0,0,"A");
 	cout<<"Vertex2d ";
 	for (int i = 0; i < vee1.name.size(); ++i)
 	{
@@ -222,16 +222,16 @@ int main()
 	}
 	cout<<" x: "<<vee1.x<<" y: "<<vee1.y<<" z: "<<vee1.z<<endl;
 
-	Vertex2d vee1 = Vertex2d(0,0,0,"EA");
+	Vertex2d veer1 = Vertex2d(0,0,0,"E");
 	cout<<"Vertex2d ";
-	for (int i = 0; i < vee1.name.size(); ++i)
+	for (int i = 0; i < veer1.name.size(); ++i)
 	{
-		cout<<vee1.name[i];
+		cout<<veer1.name[i];
 	}
-	cout<<" x: "<<vee1.x<<" y: "<<vee1.y<<" z: "<<vee1.z<<endl;
+	cout<<" x: "<<veer1.x<<" y: "<<veer1.y<<" z: "<<veer1.z<<endl;
 //---------------------------------------
 
-	Vertex2d vee2 = Vertex2d(1,0,0,"FB");
+	Vertex2d vee2 = Vertex2d(1,0,0,"F");
 	cout<<"Vertex2d ";
 	for (int i = 0; i < vee2.name.size(); ++i)
 	{
@@ -239,16 +239,16 @@ int main()
 	}
 	cout<<" x: "<<vee2.x<<" y: "<<vee2.y<<" z: "<<vee2.z<<endl;
 
-	Vertex2d vee2 = Vertex2d(1,0,0,"FB");
+	Vertex2d veer2 = Vertex2d(1,0,0,"B");
 	cout<<"Vertex2d ";
-	for (int i = 0; i < vee2.name.size(); ++i)
+	for (int i = 0; i < veer2.name.size(); ++i)
 	{
-		cout<<vee2.name[i];
+		cout<<veer2.name[i];
 	}
-	cout<<" x: "<<vee2.x<<" y: "<<vee2.y<<" z: "<<vee2.z<<endl;
+	cout<<" x: "<<veer2.x<<" y: "<<veer2.y<<" z: "<<veer2.z<<endl;
 //-------------------------------------
 
-	Vertex2d vee3 = Vertex2d(0,0,1,"HD");
+	Vertex2d vee3 = Vertex2d(0,0,1,"D");
 	cout<<"Vertex2d ";
 	for (int i = 0; i < vee3.name.size(); ++i)
 	{
@@ -256,15 +256,15 @@ int main()
 	}
 	cout<<" x: "<<vee3.x<<" y: "<<vee3.y<<" z: "<<vee3.z<<endl;
 
-	Vertex2d vee3 = Vertex2d(0,0,1,"HD");
+	Vertex2d veer3 = Vertex2d(0,0,1,"H");
 	cout<<"Vertex2d ";
-	for (int i = 0; i < vee3.name.size(); ++i)
+	for (int i = 0; i < veer3.name.size(); ++i)
 	{
-		cout<<vee3.name[i];
+		cout<<veer3.name[i];
 	}
-	cout<<" x: "<<vee3.x<<" y: "<<vee3.y<<" z: "<<vee3.z<<endl;
+	cout<<" x: "<<veer3.x<<" y: "<<veer3.y<<" z: "<<veer3.z<<endl;
 //---------------------------------------
-	Vertex2d vee4 = Vertex2d(1,0,1,"GC");
+	Vertex2d vee4 = Vertex2d(1,0,1,"G");
 	cout<<"Vertex2d ";
 	for (int i = 0; i < vee4.name.size(); ++i)
 	{
@@ -272,22 +272,22 @@ int main()
 	}
 	cout<<" x: "<<vee4.x<<" y: "<<vee4.y<<" z: "<<vee4.z<<endl;
 	
-	Vertex2d vee4 = Vertex2d(1,0,1,"GC");
+	Vertex2d veer4 = Vertex2d(1,0,1,"C");
 	cout<<"Vertex2d ";
-	for (int i = 0; i < vee4.name.size(); ++i)
+	for (int i = 0; i < veer4.name.size(); ++i)
 	{
 		cout<<vee4.name[i];
 	}
-	cout<<" x: "<<vee4.x<<" y: "<<vee4.y<<" z: "<<vee4.z<<endl;
+	cout<<" x: "<<veer4.x<<" y: "<<veer4.y<<" z: "<<veer4.z<<endl;
 //-------------------------------------------	
 	Edge2d eee1 = Edge2d(vee1,vee2);
 	Edge2d eee2 = Edge2d(vee2,vee4);
 	Edge2d eee3 = Edge2d(vee3,vee4);
 	Edge2d eee4 = Edge2d(vee1,vee3);
-	Edge2d eee1 = Edge2d(vee1,vee2);
-	Edge2d eee2 = Edge2d(vee2,vee4);
-	Edge2d eee3 = Edge2d(vee3,vee4);
-	Edge2d eee4 = Edge2d(vee1,vee3);
+	Edge2d eeer1 = Edge2d(veer1,veer2);
+	Edge2d eeer2 = Edge2d(veer2,veer4);
+	Edge2d eeer3 = Edge2d(veer3,veer4);
+	Edge2d eeer4 = Edge2d(veer1,veer3);
 	
 	object2d obj3;
 	vector<Vertex2d> vee;
@@ -295,10 +295,10 @@ int main()
 	vee.push_back(vee2);
 	vee.push_back(vee3);
 	vee.push_back(vee4);
-	vee.push_back(vee1);
-	vee.push_back(vee2);
-	vee.push_back(vee3);
-	vee.push_back(vee4);
+	vee.push_back(veer1);
+	vee.push_back(veer2);
+	vee.push_back(veer3);
+	vee.push_back(veer4);
 	
 	vector<Edge2d> eee;
 	eee.push_back(eee1);
@@ -306,10 +306,10 @@ int main()
 	eee.push_back(eee3);
 	eee.push_back(eee4);
 	
-	eee.push_back(eee1);
-	eee.push_back(eee2);
-	eee.push_back(eee3);
-	eee.push_back(eee4);
+	eee.push_back(eeer1);
+	eee.push_back(eeer2);
+	eee.push_back(eeer3);
+	eee.push_back(eeer4);
 	
 	obj3.vertices = vee;
 	obj3.edges = eee;
