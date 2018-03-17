@@ -324,8 +324,8 @@ int main()
 	cout<<"*******************************testing 3dto2d projection"<<endl;
 	Vertex3d v3_1 = Vertex3d(0,0,0,"A");
 	Vertex3d v3_2 = Vertex3d(2,0,0,"B");
-	Vertex3d v3_3 = Vertex3d(0,2,0,"C");
-	Vertex3d v3_4 = Vertex3d(2,2,0,"D");
+	Vertex3d v3_3 = Vertex3d(2,2,0,"C");
+	Vertex3d v3_4 = Vertex3d(0,2,0,"D");
 	Vertex3d v3_5 = Vertex3d(1,1,2,"E");
 	Edge3d e3_1 = Edge3d(v3_1,v3_2);
 	Edge3d e3_2 = Edge3d(v3_2,v3_3);
@@ -349,13 +349,20 @@ int main()
 	p.solid.edges.push_back(e3_6);
 	p.solid.edges.push_back(e3_7);
 	p.solid.edges.push_back(e3_8);
+	cout<<"edges in solid 1:"<<endl;
+		for (int i = 0; i < p.solid.edges.size(); ++i)
+		{
+			cout<<p.solid.edges[i].v1.x<<" "<<p.solid.edges[i].v1.y<<" "<<p.solid.edges[i].v1.z<<"    ";
+			cout<<p.solid.edges[i].v2.x<<" "<<p.solid.edges[i].v2.y<<" "<<p.solid.edges[i].v2.z<<endl;
+		}
+		cout<<"$$$$$";
 	vector<double> x_y;
 	vector<double> y_z;
 	vector<double> x_z;
 
 	x_y.push_back(0);
 	x_y.push_back(0);
-	x_y.push_back(1);
+	x_y.push_back(-1);
 
 	y_z.push_back(1);
 	y_z.push_back(0);
@@ -368,12 +375,20 @@ int main()
 	
 	p.project();
 	
+	
 	object2d proje = p.proj;
-	cout<<proje.vertices.size();
+	cout<<proje.vertices.size()<<endl;
 	for (int i = 0; i < proje.vertices.size(); ++i)
 	{
 		cout<<proje.vertices[i].x<<" "<<proje.vertices[i].y<<" "<<proje.vertices[i].z<<endl;
 
+	}
+	cout<<"finally"<<endl;
+	cout<<proje.edges.size()<<endl;
+	for (int i = 0; i < proje.edges.size(); ++i)
+	{
+		cout<<proje.edges[i].v1.x<<" "<<proje.edges[i].v1.y<<" "<<proje.edges[i].v1.z<<"    ";
+		cout<<proje.edges[i].v2.x<<" "<<proje.edges[i].v2.y<<" "<<proje.edges[i].v2.z<<"    "<<proje.edges[i].hidden<<endl;
 	}
 	return 0;
 };

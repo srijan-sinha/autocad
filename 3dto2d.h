@@ -22,7 +22,7 @@ class projection
 
 		}
 		cout<<"$$$$$";
-		cout<<"direction:"<<endl;
+		cout<<"direction in project:"<<endl;
 		for (int i = 0; i < direction.size(); ++i)
 		{
 			cout<<direction[i]<<" ";
@@ -33,6 +33,20 @@ class projection
 		object2d obj1;
 		int num_vertices = solid.vertices.size();
 		int num_edges = solid.edges.size();
+		cout<<"vertex in solid :"<<endl;
+		for (int i = 0; i < num_vertices; ++i)
+		{
+			cout<<solid.vertices[i].x<<" "<<solid.vertices[i].y<<" "<<solid.vertices[i].z<<endl;
+		}
+		cout<<"$$$$$";
+		
+		cout<<"edges in solid :"<<endl;
+		for (int i = 0; i < num_edges; ++i)
+		{
+			cout<<solid.edges[i].v1.x<<" "<<solid.edges[i].v1.y<<" "<<solid.edges[i].v1.z<<"    ";
+			cout<<solid.edges[i].v2.x<<" "<<solid.edges[i].v2.y<<" "<<solid.edges[i].v2.z<<endl;
+		}
+		cout<<"$$$$$";
 		for(int i = 0; i < num_vertices; i++)
 		{
 			obj1.vertices.push_back(project_v(solid.vertices[i]));
@@ -41,7 +55,9 @@ class projection
 		{
 			obj1.edges.push_back(project_e(solid.edges[i]));
 		}
+
 		proj = obj1;
+		set_bool();
 	}
 	Vertex2d project_v(Vertex3d v)
 	{
@@ -49,13 +65,37 @@ class projection
 		/// Finds out the projection of a 3D vertex given a plane of projection by rotating the plane to coincide it with x-y plane.
 		///	
 		Vertex2d v1;
+
 		Vertex3d v_copy = Vertex3d(v.x, v.y, v.z, v.name);
+		
 		double angle = rotation_angle();
+		double angle_degree = angle*180/3.14;
+		angle_degree = floor(10*angle_degree)/10; 
+		cout<<"rotation angle :"<<angle_degree;
+		angle = angle_degree*3.14/180;
+		
 		vector<double> rot_axis;
-		rot_axis.push_back(direction[1]);
-		rot_axis.push_back(-1 * direction[0]);
+		if (direction[1] == 0)
+			rot_axis.push_back(0);
+		else
+			rot_axis.push_back(-1 *direction[1]);
+		rot_axis.push_back(direction[0]);
 		rot_axis.push_back(0);
+		cout<<"rotate axis:"<<endl;
+		for (int i = 0; i < rot_axis.size(); ++i)
+		{
+			cout<<rot_axis[i]<<" ";
+
+		}
+		cout<<endl<<"$$$$$"<<endl;
+		
+		if (!(rot_axis[0] == 0 && rot_axis[1] == 0 && rot_axis[2] == 0))
 		v_copy.rotate(rot_axis, angle);
+		cout<<"##############################################";
+		cout<<"v_copy: "<<v_copy.x<<" "<<v_copy.y<<" "<<v_copy.z<<endl;
+		
+		cout<<endl<<"$$$$$"<<endl;
+		
 		v1.x = v_copy.x;
 		v1.y = v_copy.y;
 		v1.z = 0;
@@ -64,16 +104,21 @@ class projection
 		return v1;
 	}
 
+
 	Edge2d project_e(Edge3d e)
 	{
 		///
 		/// 
 		///
+		
+		cout<<e.v1.x<<" "<<e.v1.y<<" "<<e.v1.z<<"    ";
+		cout<<e.v2.x<<" "<<e.v2.y<<" "<<e.v2.z<<endl;
 		Edge2d e1;
 		e1.v1 = project_v(e.v1);
 		e1.v2 = project_v(e.v2);
 		e1.hidden = false;
 		e1.proj_of = e;
+
 		return e1;
 	}
 
@@ -96,6 +141,14 @@ class projection
 
 	double rotation_angle()
 	{
+		cout<<"direction in rotation_angle:"<<endl;
+		for (int i = 0; i < direction.size(); ++i)
+		{
+			cout<<direction[i]<<" ";
+
+		}
+		cout<<endl<<"$$$$$"<<endl;
+		
 		double a = direction[0];
 		double b = direction[1];
 		double c = direction[2];

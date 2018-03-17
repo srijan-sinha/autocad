@@ -120,12 +120,12 @@ class Vertex3d
 
        	double sinx = sin(radian);
        	double cosx = cos(radian);
-//       	cout << endl << "sinx and cosx :" << sinx << " " << cosx << endl;
+       	cout << endl << "sinx and cosx :" << sinx << " " << cosx << endl;
        	double u = direction[0]*direction[0] + direction[1]*direction[1] + direction[2]*direction[2];
        	double u_x = direction[0] / sqrt(u);
        	double u_y = direction[1] / sqrt(u);
        	double u_z = direction[2] / sqrt(u);
-       	
+       	cout<<"u_x: "<<u_x<<"u_y: "<<u_y<<"u_z: "<<u_z<<endl;
        	MatrixXd R(3,3);
 	    R(0,0) = cosx + (u_x*u_x)*(1-cosx);
 	    R(1,0) = u_y*u_x*(1-cosx) + u_z*sinx;
@@ -136,19 +136,19 @@ class Vertex3d
 	    R(2,1) = u_z*u_y*(1-cosx) + u_x*sinx;
 	    R(1,2) = u_z*u_y*(1-cosx) - u_x*sinx;
 	    R(2,2) = cosx + (u_z*u_z)*(1-cosx);
-//	    cout << "Rotation matrix: " << endl;
-//	    cout << R << endl;
+	    cout << "Rotation matrix: " << endl;
+	    cout << R << endl;
 	    
 	    MatrixXd p(3,1);
 	    p(0,0) = x;
 	    p(1,0) = y;
 	    p(2,0) = z;
-//	    cout << "initial matrix: " << endl;
-//	    cout << p << endl;
+	    cout << "initial matrix: " << endl;
+	    cout << p << endl;
 	    
 	    MatrixXd P = R*p;
-//	    cout << "final matrix: " << endl;
-//	    cout << P << endl;
+	    cout << "final matrix: " << endl;
+	    cout << P << endl;
 
 	    x = P(0,0);
 	    y = P(1,0);
