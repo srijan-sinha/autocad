@@ -49,17 +49,81 @@ class Vertex2d
 	    y = P(1,0);
 	    
 	}
-	void mirror(int plane)
+	void mirror(int direction) //1 for x and -1 for y
 	{
 
+       	MatrixXd T(2,2);
+	    T(0,0) = 1*direction;
+	    T(1,0) = 0;
+	    T(0,1) = 0;
+	    T(1,1) = -1*direction;
+	    
+       	MatrixXd p(2,1);
+	    p(0,0) = x;
+	    p(1,0) = y;
+	    cout << "initial matrix: " << endl;
+	    cout << p << endl;
+	    
+	    MatrixXd P = T*p;
+	    cout << "final matrix: " << endl;
+	    cout << P << endl;
+
+	    x = P(0,0);
+	    y = P(1,0);
 	}
-	void rotate(int direction, int degrees)
+	void rotate(double radian)
 	{
+		double cosx = cos(radian);
+		double sinx = sin(radian);
+       	MatrixXd T(2,2);
+	    T(0,0) = cosx;
+	    T(1,0) = -1*sinx;
+	    T(0,1) = sinx;
+	    T(1,1) = cosx;
+	    
+       	MatrixXd p(2,1);
+	    p(0,0) = x;
+	    p(1,0) = y;
+	    cout << "initial matrix: " << endl;
+	    cout << p << endl;
+	    
+	    MatrixXd P = T*p;
+	    cout << "final matrix: " << endl;
+	    cout << P << endl;
 
+	    x = P(0,0);
+	    y = P(1,0);
 	}
-	void scale(float factor)
+	void scale(double factor)
 	{
+		x = factor*x;
+		y = factor*y;
+	}
+	void shear(double factor, int direction) //0 for x and 1 for y;
+	{
+		int cx,cy;
+		if (direction == 0)
+			cx=1;
+		else
+			cy=1;
+		MatrixXd T(2,2);
+	    T(0,0) = 1;
+	    T(1,0) = cx * factor;
+	    T(0,1) = cy * factor;
+	    T(1,1) = 1;
+	    
+       	MatrixXd p(2,1);
+	    p(0,0) = x;
+	    p(1,0) = y;
+	    cout << "initial matrix: " << endl;
+	    cout << p << endl;
+	    
+	    MatrixXd P = T*p;
+	    cout << "final matrix: " << endl;
+	    cout << P << endl;
 
+	    x = P(0,0);
+	    y = P(1,0);
 	}
 };
 
@@ -81,21 +145,30 @@ class Edge2d
 	{
 
 	}
-	void translate(int direction, float value)
+	void translate(vector<double> direction, double units)
 	{
-		//direction 1->x 2->y 3->z
+		v1.translate(direction,units);
+		v2.translate(direction,units);
 	}
-	void mirror(int plane)
+	void mirror(int direction)
 	{
-		//plane 1->x-y 2->y-z 3->z-x
+		v1.mirror(direction);
+		v2.mirror(direction);
 	}
-	void rotate(int direction, int degrees)
+	void rotate(double radian)
 	{
-		//direction protocol same as translate, degrees always clockwise
+		v1.rotate(radian);
+		v2.rotate(radian);
 	}
-	void scale(float factor)
+	void scale(double factor)
 	{
-		//scales by input factor
+		v1.scale(factor);
+		v2.scale(factor);
+	}
+	void shear(double factor, int direction) //0 for x and 1 for y;
+	{
+		v1.shear(factor,direction);
+		v2.shear(factor,direction);
 	}
 };
 
@@ -114,6 +187,41 @@ public:
 		
 	}
 	//Add functionalities.
+	void translate(vector<double> direction, double units)
+	{
+		for (int i = 0; i < num_edges; ++i)
+		{
+			edges[i].translate(direction,units);
+		}
+	}
+	void mirror(int direction)
+	{
+		for (int i = 0; i < num_edges; ++i)
+		{
+			edges[i].mirror(direction);
+		}
+	}
+	void rotate(double radian)
+	{
+		for (int i = 0; i < num_edges; ++i)
+		{
+			edges[i].rotate(radian);
+		}
+	}
+	void scale(double factor)
+	{
+		for (int i = 0; i < num_edges; ++i)
+		{
+			edges[i].scale(factor);
+		}
+	}
+	void shear(double factor, int direction) //0 for x and 1 for y;
+	{
+		for (int i = 0; i < num_edges; ++i)
+		{
+			edges[i].shear(factor,direction);
+		}
+	}
 };
 
 class object2d
@@ -122,4 +230,40 @@ class object2d
 	vector<Vertex2d> vertices;
 	vector<Edge2d> edges;
 	vector<Surface2d> surfaces;
+	int num_surface = surfaces.size();
+	void translate_2d(vector<double> direction, double units)
+	{
+		for (int i = 0; i < num_surface; ++i)
+		{
+			surfaces[i].translate(direction,units);
+		}
+	}
+	void mirror_2d(int direction)
+	{
+		for (int i = 0; i < num_surface; ++i)
+		{
+			surfaces[i].mirror(direction);
+		}
+	}
+	void rotate_2d(double radian)
+	{
+		for (int i = 0; i < num_surface; ++i)
+		{
+			surfaces[i].rotate(radian);
+		}
+	}
+	void scale_2d(double factor)
+	{
+		for (int i = 0; i < num_surface; ++i)
+		{
+			surfaces[i].scale(factor);
+		}
+	}
+	void shear_2d(double factor, int direction) //0 for x and 1 for y;
+	{
+		for (int i = 0; i < num_surface; ++i)
+		{
+			surfaces[i].shear(factor,direction);
+		}
+	}
 };

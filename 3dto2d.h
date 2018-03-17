@@ -389,6 +389,7 @@ class projection
 			return true;
 		else
 		{
+
 			if(mid_check(e.v1, e.v2, surface) == 1)
 				return true;
 			else
@@ -401,12 +402,13 @@ class projection
 		///
 		/// returns 0 if vert outside, 1 if inside, 2 if on the line
 		///
+		/*cout<<"surface edges:"<<endl;
 		for (int i = 0; i < surface.edges.size(); ++i)
 		{
 			cout<<surface.edges[i].v1.x<<" "<<surface.edges[i].v1.y<<" "<<surface.edges[i].v1.z<<"    ";
 			cout<<surface.edges[i].v2.x<<" "<<surface.edges[i].v2.y<<" "<<surface.edges[i].v2.z<<endl;
 		
-		}
+		}*/
 	
 		if(on_boundary(v, surface))
 			return 2;
@@ -558,6 +560,7 @@ class projection
 		v.x = (v1.x + v2.x)/2;
 		v.y = (v1.y + v2.y)/2;
 		v.z = (v1.z + v2.z)/2;
+		cout<<position_vert(v,surface);
 		return position_vert(v, surface);
 	}
 

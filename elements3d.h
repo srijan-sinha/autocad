@@ -259,6 +259,29 @@ class object3d
 	{
 
 	}
-	
+	void translate_3d(vector<double> direction, double value)
+	{
+		//direction 1->x 2->y 3->z
+		for (int i = 0; i < surfaces.size(); i++)
+       		surfaces[i].translate(direction, value);
+	}
+	void mirror_3d(vector<double> plane)
+	{
+		//plane 1->x-y 2->y-z 3->z-x
+		for (int i = 0; i < surfaces.size(); i++)
+       		surfaces[i].mirror(plane);
+	}
+	void rotate_3d(vector<double> direction, double radian)
+	{
+		//direction protocol same as translate, degrees always clockwise
+		for (int i = 0; i < surfaces.size(); i++)
+       		surfaces[i].rotate(direction, radian);
+	}
+	void scale_3d(double factor)
+	{
+		//scales by input factor
+		for (int i = 0; i < surfaces.size(); i++)
+       		surfaces[i].scale(factor);
+	}
 };
 
