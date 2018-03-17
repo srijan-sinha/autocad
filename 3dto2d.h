@@ -274,6 +274,7 @@ class projection
 
 	void set_bool()
 	{
+		//seperate();
 		for(int i = 0; i < proj.edges.size(); i++)
 		{
 			check_hidden(proj.edges[i]);
@@ -282,9 +283,13 @@ class projection
 
 	void check_hidden(Edge2d e)
 	{
+		cout<<"#"<<endl;
+
 		for(int i = 0; i < solid.surfaces.size(); i++)
 		{
-			if(hid_by_surf(e, solid.surfaces[i]))
+
+			bool t = hid_by_surf(e, solid.surfaces[i]);
+			if(t)
 			{
 				e.hidden = true;
 				break;
@@ -294,14 +299,17 @@ class projection
 
 	bool hid_by_surf(Edge2d e, Surface3d surface)
 	{
+		cout<<"&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"<<endl;
+		
 		Vertex3d v1 = e.proj_of.v1;
 		Vertex3d v2 = e.proj_of.v2;
+		cout<<"position_fore result "<<position_fore(v1, surface)<<" "<<position_fore(v2, surface)<<endl;
 		if(position_fore(v1, surface) && position_fore(v2, surface))
 			e.hidden = false;
 		else if(position_fore(v1, surface))
 			e.hidden = false;
 		else if(position_fore(v2, surface))
-			e.hidden = true;
+			e.hidden = false;
 		else
 		{
 			if(inside(e, project_s(surface)))
@@ -314,30 +322,65 @@ class projection
 		Edge3d e1 = surface.edges[1];
 		Edge3d e2 = surface.edges[2];
 		//find cross product of e1 and e2 to get a,b,c;
+		cout<<"vector e1: ";
+		cout<<e1.v1.x<<" "<<e1.v1.y<<" "<<e1.v1.z<<"    ";
+		cout<<e1.v2.x<<" "<<e1.v2.y<<" "<<e1.v2.z<<endl;
+
+
+		cout<<"vector e2: ";
+		cout<<e2.v1.x<<" "<<e2.v1.y<<" "<<e2.v1.z<<"    ";
+		cout<<e2.v2.x<<" "<<e2.v2.y<<" "<<e2.v2.z<<endl;
 		
 		vector<double> w1;
 		w1.push_back(e1.v1.x - e1.v2.x);
 		w1.push_back(e1.v1.y - e1.v2.y);
 		w1.push_back(e1.v1.z - e1.v2.z);
+		cout<<"w1 :"<<endl;
+		for (int i = 0; i < w1.size(); ++i)
+		{
+			cout<<w1[i];
+		}
+		cout<<"&&&&&"<<endl;
 		vector<double> w2;
 		w2.push_back(e2.v1.x - e2.v2.x);
 		w2.push_back(e2.v1.y - e2.v2.y);
 		w2.push_back(e2.v1.z - e2.v2.z);
+		cout<<"w2 :"<<endl;
+		for (int i = 0; i < w2.size(); ++i)
+		{
+			cout<<w2[i];
+		}
+		cout<<"&&&&&"<<endl;
+		
 		vector<double> w3 = cross(w1,w2);
+		cout<<"w3 :"<<endl;
+		for (int i = 0; i < w3.size(); ++i)
+		{
+			cout<<w3[i];
+		}
+		cout<<"&&&&&"<<endl;
+		
 		double a = w3[0];
 		double b = w3[1];
 		double c = w3[2];
 		double d = 0;
-		d = a*(e1.v1.x) + b*(e1.v1.y) + c*(e1.v1.z);
-		double k = d - a*(v.x) -b*(v.y) -c*(v.z);
-		k = k / c;
-		if(k > 0)
+		cout<<"a = "<<a<<" b = "<<b<<" c = "<<c<<endl;
+		d = (a*(e1.v1.x) + b*(e1.v1.y) + c*(e1.v1.z));
+		if ((a*direction[0] + b*direction[1] + c*direction[2]) == 0)
+			return false;
+		double k = (d - a*(v.x) -b*(v.y) -c*(v.z))/(a*direction[0] + b*direction[1] + c*direction[2]);
+		cout<<"k = "<<k<<endl;
+		if(k < 0)
 			return false;
 		return true;
 	}
 
 	bool inside(Edge2d e, Surface2d surface)
 	{
+		cout<<"vector e: ";
+		cout<<e.v1.x<<" "<<e.v1.y<<" "<<e.v1.z<<"    ";
+		cout<<e.v2.x<<" "<<e.v2.y<<" "<<e.v2.z<<endl;
+		cout<<"position_vert results "<<position_vert(e.v1, surface)<<" "<<position_vert(e.v2, surface);
 		if((position_vert(e.v1, surface) == 0) || (position_vert(e.v2, surface) == 0))
 			return false;
 		else if(position_vert(e.v1, surface)*position_vert(e.v2, surface) == 1)
@@ -358,6 +401,13 @@ class projection
 		///
 		/// returns 0 if vert outside, 1 if inside, 2 if on the line
 		///
+		for (int i = 0; i < surface.edges.size(); ++i)
+		{
+			cout<<surface.edges[i].v1.x<<" "<<surface.edges[i].v1.y<<" "<<surface.edges[i].v1.z<<"    ";
+			cout<<surface.edges[i].v2.x<<" "<<surface.edges[i].v2.y<<" "<<surface.edges[i].v2.z<<endl;
+		
+		}
+	
 		if(on_boundary(v, surface))
 			return 2;
 		else if(ray_casting(v, surface) % 2 == 1)

@@ -10,7 +10,7 @@ class Vertex2d
 	double length;
 	string name;
 
-	Vertex2d(int first, int second, int third, string name_c)
+	Vertex2d(double first, double second, double third, string name_c)
 	{
 		x = first;
 		y = second;
