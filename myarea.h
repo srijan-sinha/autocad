@@ -1,11 +1,13 @@
 #ifndef GTKMM_EXAMPLE_MYAREA_H
 #define GTKMM_EXAMPLE_MYAREA_H
-
+#include "backend_header.h"
 #include <gtkmm/drawingarea.h>
 
 class MyArea : public Gtk::DrawingArea
 {
 public:
+	object2d obj;
+  
   MyArea();
   virtual ~MyArea();
 

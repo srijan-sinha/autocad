@@ -1,16 +1,18 @@
 #include "myarea.h"
 #include <cairomm/context.h>
-#include "elements2d.h"
+//#include "backend_header.h"
+
 
 MyArea::MyArea()
 {
 }
 
+
 MyArea::~MyArea()
 {
 }
 
-bool MyArea::on_draw(object2d obj, const Cairo::RefPtr<Cairo::Context>& cr)
+bool MyArea::on_draw( const Cairo::RefPtr<Cairo::Context>& cr)
 {
   Gtk::Allocation allocation = get_allocation();
   const int width = allocation.get_width();
@@ -30,14 +32,19 @@ bool MyArea::on_draw(object2d obj, const Cairo::RefPtr<Cairo::Context>& cr)
   for (int i = 0; i < obj.edges.size(); i++)
   {
     e = obj.edges[i];
+    cout<<"edges:"<<endl;
+      cout<<e.v1.x<<" "<<e.v1.y<<" "<<e.v1.z<<"    ";
+      cout<<e.v2.x<<" "<<e.v2.y<<" "<<e.v2.z<<endl;
+    
+    cout<<"$$$$$";
     if(e.hidden)
       dashes[1] = 3.0;
     else
       dashes[1] = 0;
     cr->set_source_rgb(0.0, 0.0, 0.0);
     cr->set_dash(dashes, 0.0);
-    cr->move_to(xc + e.v1.x, yc - e.v1.y);
-    cr->line_to(xc + e.v2.x, yc - e.v2.y);
+    cr->move_to(xc + 100*e.v1.x, yc - 100*e.v1.y);
+    cr->line_to(xc + 100*e.v2.x, yc - 100*e.v2.y);
   }
   cr->stroke();
 
