@@ -8,7 +8,7 @@ int main(int argc, char** argv)
    Gtk::Window win;
    win.set_title("ProCad");
 
-   Vertex3d v3_1 = Vertex3d(0,0,0,"A");
+    Vertex3d v3_1 = Vertex3d(0,0,0,"A");
 	Vertex3d v3_2 = Vertex3d(2,0,0,"B");
 	Vertex3d v3_3 = Vertex3d(2,2,0,"C");
 	Vertex3d v3_4 = Vertex3d(0,2,0,"D");
