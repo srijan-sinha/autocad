@@ -320,7 +320,7 @@ int main()
 
 	cout<<"*******************************testing 3dto2d projection"<<endl;
 	Vertex3d v3_1 = Vertex3d(0,0,0,"A");
-	Vertex3d v3_2 = Vertex3d(1,0,0,"B");
+	Vertex3d v3_2 = Vertex3d(2,0,0,"B");
 	Vertex3d v3_3 = Vertex3d(2,2,0,"C");
 	Vertex3d v3_4 = Vertex3d(0,2,0,"D");
 	Vertex3d v3_5 = Vertex3d(1,1,2,"E");
@@ -392,9 +392,9 @@ int main()
 
 	x_y.push_back(0);
 	x_y.push_back(0);
-	x_y.push_back(-1);
+	x_y.push_back(1);
 
-	y_z.push_back(1);
+	y_z.push_back(-1);
 	y_z.push_back(0);
 	y_z.push_back(0);
 	
@@ -420,7 +420,7 @@ int main()
 		cout<<proje.edges[i].v1.x<<" "<<proje.edges[i].v1.y<<" "<<proje.edges[i].v1.z<<"    ";
 		cout<<proje.edges[i].v2.x<<" "<<proje.edges[i].v2.y<<" "<<proje.edges[i].v2.z<<"    "<<proje.edges[i].hidden<<endl;
 	}
-
+/*
 	cout<<"*******************************testing 3dto2d position_fore"<<endl;
 	Vertex3d v4_1 = Vertex3d(0,0,0,"A");
 	Vertex3d v4_2 = Vertex3d(2,0,0,"B");
@@ -458,6 +458,10 @@ int main()
 	r1.push_back(e5_3);
 	r1.push_back(e5_4);
 	Surface2d s5_1 = Surface2d(r1, r1.size());
-	cout<<endl<<p.inside(e5_5,s5_1);
+	//cout<<endl<<p.inside(e5_5,s5_1);
+	cout<<p.ray_casting(v5_5, s5_1);
+	*/
+	cout<<"************************************testing hidden lines"<<endl;
+
 	return 0;
 };
