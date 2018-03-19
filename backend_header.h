@@ -880,24 +880,24 @@ class projection
 		//seperate();
 		for(int i = 0; i < proj.edges.size(); i++)
 		{
-			check_hidden(proj.edges[i]);
+			proj.edges[i].hidden=check_hidden(proj.edges[i]);
 		}
 	}
 
-	void check_hidden(Edge2d e)
+	bool check_hidden(Edge2d e)
 	{
 		cout<<"#"<<endl;
 
 		for(int i = 0; i < solid.surfaces.size(); i++)
 		{
 
-			bool t = hid_by_surf(e, solid.surfaces[i]);
-			if(t)
+			if(hid_by_surf(e, solid.surfaces[i]))
 			{
-				e.hidden = true;
-				break;
+				return true;
+				
 			}
 		}
+		return false;
 	}
 
 	bool hid_by_surf(Edge2d e, Surface3d surface)
@@ -908,15 +908,23 @@ class projection
 		Vertex3d v2 = e.proj_of.v2;
 		cout<<"position_fore result "<<position_fore(v1, surface)<<" "<<position_fore(v2, surface)<<endl;
 		if(position_fore(v1, surface) && position_fore(v2, surface))
-			e.hidden = false;
+			//e.hidden = false;
+			return false;
 		else if(position_fore(v1, surface))
-			e.hidden = false;
+			//e.hidden = false;
+			return false;
 		else if(position_fore(v2, surface))
-			e.hidden = false;
+			//e.hidden = false;
+			return false;
 		else
 		{
 			if(inside(e, project_s(surface)))
-				e.hidden = true;
+			{
+				//e.hidden = true;
+				cout<<"gggggggggggggggggggggggggggggggggggggggggggggggtrue";
+				return true;
+				
+			}
 		}
 	}
 
@@ -973,7 +981,7 @@ class projection
 			return false;
 		double k = (d - a*(v.x) -b*(v.y) -c*(v.z))/(a*direction[0] + b*direction[1] + c*direction[2]);
 		cout<<"k = "<<k<<endl;
-		if(k < 0)
+		if(k <= 0)
 			return false;
 		return true;
 	}
@@ -983,7 +991,7 @@ class projection
 		cout<<"vector e: ";
 		cout<<e.v1.x<<" "<<e.v1.y<<" "<<e.v1.z<<"    ";
 		cout<<e.v2.x<<" "<<e.v2.y<<" "<<e.v2.z<<endl;
-		cout<<"position_vert results "<<position_vert(e.v1, surface)<<" "<<position_vert(e.v2, surface);
+		cout<<"position_vert results "<<position_vert(e.v1, surface)<<" "<<position_vert(e.v2, surface)<<endl;
 		if((position_vert(e.v1, surface) == 0) || (position_vert(e.v2, surface) == 0))
 			return false;
 		else if(position_vert(e.v1, surface)*position_vert(e.v2, surface) == 1)
@@ -1052,9 +1060,13 @@ class projection
 	int ray_casting(Vertex2d v, Surface2d surface)
 	{
 		int count = 0;
+		cout<<"count initial: "<<count<<endl;
 		count = count + poly_vertex(v, surface);
+		cout<<"count after poly_vertex: "<<count<<endl;
 		count = count + coincident_edge(v, surface);
+		cout<<"count after coincident_edge: "<<count<<endl;
 		count = count + edge_intersect(v, surface);
+		cout<<"count edge_intersect: "<<count<<endl;
 		return count;
 	}
 
@@ -1089,10 +1101,14 @@ class projection
 		int count = 0;
 		for (int i = 0; i < surface.num_edges; i++)
 		{
-			if((surface.edges[i].v1.y > v.y) && (surface.edges[i].v2.y < v.y))
+			int x0 = surface.edges[i].v1.x + (v.y - surface.edges[i].v1.y)*(surface.edges[i].v2.x - surface.edges[i].v1.x)/(surface.edges[i].v2.y - surface.edges[i].v1.y); 
+			if (x0>v.x)
+			{
+				if((surface.edges[i].v1.y > v.y) && (surface.edges[i].v2.y < v.y))
 				count = count + 1;
 			else if((surface.edges[i].v1.y < v.y) && (surface.edges[i].v2.y > v.y))
 				count = count + 1;
+			}
 		}
 		return count;
 	}
