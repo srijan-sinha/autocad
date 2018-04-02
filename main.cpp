@@ -312,12 +312,12 @@ int main()
 	obj3.vertices = vee;
 	obj3.edges = eee;
 	rev_3dto2d r;
-	vector<Vertex3d> vi = r.cor_vertex(obj1,obj2,obj3);
+	/*vector<Vertex3d> vi = r.cor_vertex(obj1,obj2,obj3);
 	for (int i = 0; i < vi.size(); ++i)
 	{
 		cout<<vi[i].x<<","<<vi[i].y<<","<<vi[i].z<<endl;
 	}
-
+*/
 	cout<<"*******************************testing 3dto2d projection"<<endl;
 	Vertex3d v3_1 = Vertex3d(0,0,0,"A");
 	Vertex3d v3_2 = Vertex3d(2,0,0,"B");
@@ -340,19 +340,19 @@ int main()
 	vector<Edge3d> w2;
 	w2.push_back(e3_5);
 	w2.push_back(e3_6);
-	w2.push_back(e3_2);
+	w2.push_back(e3_1);
 	vector<Edge3d> w3;
 	w3.push_back(e3_6);
 	w3.push_back(e3_7);
-	w3.push_back(e3_3);
+	w3.push_back(e3_2);
 	vector<Edge3d> w4;
 	w4.push_back(e3_7);
 	w4.push_back(e3_8);
-	w4.push_back(e3_4);
+	w4.push_back(e3_3);
 	vector<Edge3d> w5;
 	w5.push_back(e3_8);
 	w5.push_back(e3_5);
-	w5.push_back(e3_1);
+	w5.push_back(e3_4);
 	Surface3d s3_1 = Surface3d(w1,w1.size());
 	Surface3d s3_2 = Surface3d(w2,w2.size());
 	Surface3d s3_3 = Surface3d(w3,w3.size());
@@ -392,11 +392,11 @@ int main()
 
 	x_y.push_back(0);
 	x_y.push_back(0);
-	x_y.push_back(1);
+	x_y.push_back(15);
 
 	y_z.push_back(-1);
-	y_z.push_back(0);
-	y_z.push_back(0);
+	y_z.push_back(0)
+;	y_z.push_back(0);
 	
 	x_z.push_back(0);
 	x_z.push_back(1);
@@ -407,13 +407,14 @@ int main()
 
 	
 	object2d proje = p.proj;
+	cout<<"finally"<<endl;
+	
 	cout<<proje.vertices.size()<<endl;
 	for (int i = 0; i < proje.vertices.size(); ++i)
 	{
 		cout<<proje.vertices[i].x<<" "<<proje.vertices[i].y<<" "<<proje.vertices[i].z<<endl;
 
 	}
-	cout<<"finally"<<endl;
 	cout<<proje.edges.size()<<endl;
 	for (int i = 0; i < proje.edges.size(); ++i)
 	{

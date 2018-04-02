@@ -23,15 +23,16 @@ class file_handle
 	    inFile.open(filename);
 	    if (!inFile) 
 	        cout << "Unable to open file";
+	    // cout<<"before processing"<<endl;
 	    string dim;
 	    inFile>>dim;
-	    cout<<dim<<endl;
+	    // cout<<dim<<endl;
 	    string vertices;
 	    inFile>>vertices;
-	    cout<<vertices<<endl;
+	    // cout<<vertices<<endl;
 	    int num_vert;
 	    inFile>>num_vert;
-	    cout<<num_vert<<endl;
+	    // cout<<num_vert<<endl;
 	    vector<Vertex2d> vert;
 	    for (int i = 0; i < num_vert; ++i)
 	    {
@@ -45,7 +46,7 @@ class file_handle
 	        inFile>>z;
 	        inFile>>label;
 	        Vertex2d v = Vertex2d(x,y,z,label);
-	        cout<<"x="<<v.x<<" y="<<v.y<<" z="<<v.z<<" name="<<v.name<<endl;
+	        //cout<<"x="<<v.x<<" y="<<v.y<<" z="<<v.z<<" name="<<v.name<<endl;
 	        vert.push_back(v);
 	    }
 	    for (int i = 0; i < vert.size(); ++i)
@@ -54,10 +55,10 @@ class file_handle
 	    }
 	    string Edges;
 	    inFile>>Edges;
-	    cout<<Edges;
+	    // cout<<Edges;
 	    int num_edges;
 	    inFile>>num_edges;
-	    cout<<num_edges<<endl;
+	    // cout<<num_edges<<endl;
 	    vector<Edge2d> edge;
 
 	    for (int i = 0; i < num_edges; ++i)
@@ -84,7 +85,7 @@ class file_handle
 	                e1.v2 = vert[i];
 	            }
 	        }
-	        cout<<e1.v1.name<<e1.v2.name<<endl;
+	        // cout<<e1.v1.name<<e1.v2.name<<endl;
 	        e1.name = e1.v1.name + e1.v2.name;
 	        edge.push_back(e1);
 	        //Vertex2d v = Vertex2d(x,y,z,label);
@@ -93,8 +94,8 @@ class file_handle
 	    }
 	    for (int i = 0; i < edge.size(); ++i)
 	    {
-	        cout<<edge[i].v1.x<<" "<<edge[i].v1.y<<" "<<edge[i].v1.z<<"    ";
-	        cout<<edge[i].v2.x<<" "<<edge[i].v2.y<<" "<<edge[i].v2.z<<" "<<edge[i].name<<endl;
+	        // cout<<edge[i].v1.x<<" "<<edge[i].v1.y<<" "<<edge[i].v1.z<<"    ";
+	        // cout<<edge[i].v2.x<<" "<<edge[i].v2.y<<" "<<edge[i].v2.z<<" "<<edge[i].name<<endl;
 	           
 	    }
 	    object2d obj;
@@ -112,15 +113,16 @@ class file_handle
 	    inFile.open(filename);
 	    if (!inFile) 
 	        cout << "Unable to open file";
+	    // cout<<"before processing"<<endl;
 	    string dim;
 	    inFile>>dim;
-	    cout<<dim<<endl;
+	    // cout<<dim<<endl;
 	    string vertices;
 	    inFile>>vertices;
-	    cout<<vertices<<endl;
+	    // cout<<vertices<<endl;
 	    int num_vert;
 	    inFile>>num_vert;
-	    cout<<num_vert<<endl;
+	    // cout<<num_vert<<endl;
 	    vector<Vertex3d> vert;
 	    for (int i = 0; i < num_vert; ++i)
 	    {
@@ -134,19 +136,19 @@ class file_handle
 	        inFile>>z;
 	        inFile>>label;
 	        Vertex3d v = Vertex3d(x,y,z,label);
-	        cout<<"x="<<v.x<<" y="<<v.y<<" z="<<v.z<<" name="<<v.name<<endl;
+	        //cout<<"x="<<v.x<<" y="<<v.y<<" z="<<v.z<<" name="<<v.name<<endl;
 	        vert.push_back(v);
 	    }
 	    for (int i = 0; i < vert.size(); ++i)
 	    {
-	        cout<<vert[i].x<<" "<<vert[i].y<<" "<<vert[i].z<<" "<<vert[i].name<<endl;
+	        // cout<<vert[i].x<<" "<<vert[i].y<<" "<<vert[i].z<<" "<<vert[i].name<<endl;
 	    }
 	    string Edges;
 	    inFile>>Edges;
-	    cout<<Edges;
+	    // cout<<Edges;
 	    int num_edges;
 	    inFile>>num_edges;
-	    cout<<num_edges<<endl;
+	    // cout<<num_edges<<endl;
 	    vector<Edge3d> edge;
 
 	    for (int i = 0; i < num_edges; ++i)
@@ -182,22 +184,24 @@ class file_handle
 	    }
 	    for (int i = 0; i < edge.size(); ++i)
 	    {
-	        cout<<edge[i].v1.x<<" "<<edge[i].v1.y<<" "<<edge[i].v1.z<<"    ";
-	        cout<<edge[i].v2.x<<" "<<edge[i].v2.y<<" "<<edge[i].v2.z<<" "<<edge[i].name<<endl;
+	        // cout<<edge[i].v1.x<<" "<<edge[i].v1.y<<" "<<edge[i].v1.z<<"    ";
+	        // cout<<edge[i].v2.x<<" "<<edge[i].v2.y<<" "<<edge[i].v2.z<<" "<<edge[i].name<<endl;
 	           
 	    }
 
 	    string Surfaces;
 	    inFile>>Surfaces;
-	    cout<<Surfaces;
+	    // cout<<Surfaces;
 	    int num_surf;
 	    inFile>>num_surf;
-	    cout<<num_surf<<endl;
+	    // cout<<num_surf<<endl;
 	    vector<Surface3d> surf;
 
 	    for (int i = 0; i < num_surf; ++i)
 	    {
 	    	int num;
+	    	inFile>>num;
+	    	cout<<"num ("<<i<<"): "<<num<<endl;
 	    	vector<Edge3d> v;
 	        for (int j = 0; j < num; ++j)
             {
@@ -213,11 +217,22 @@ class file_handle
             Surface3d s =Surface3d(v,v.size());
             surf.push_back(s);
         }
+        for (int i = 0; i < surf.size(); ++i)
+        {
+        	cout<<"next surface"<<endl;
+        	for (int j = 0; j < surf[i].edges.size(); ++j)
+        	{
+        		// cout<<surf[i].edges[j].v1.x<<" "<<surf[i].edges[j].v1.y<<" "<<surf[i].edges[j].v1.z<<"   ";
+				// cout<<surf[i].edges[j].v2.x<<" "<<surf[i].edges[j].v2.y<<" "<<surf[i].edges[j].v2.z<<"   "<<surf[i].edges[j].name<<endl;
+	
+        	}
+        }
 	    object3d obj;
 	    obj.vertices = vert;
 	    obj.edges = edge;
 	    obj.surfaces = surf;
 	    inFile.close();
+	    cout<<"********************************file_handle.h exit"<<endl;
 	    return obj;
 	}
 };
