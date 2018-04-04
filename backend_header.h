@@ -3,9 +3,10 @@
 #include <iostream>
 #include <math.h>
 #include "eigen3/Eigen/Dense"
-using Eigen::MatrixXd;
 
+using Eigen::MatrixXd;
 using namespace std;
+
 //////////////////////////////////Vertex3d///////////////////////////////////////////////
 class Vertex3d
 {
@@ -32,11 +33,6 @@ class Vertex3d
 
 	void translate(vector<double> direction, double value)
 	{
-		//direction 1->x 2->y 3->z
-		cout << "direction vector: " << endl;
-		for (int i=0; i<direction.size(); i++)
-       		cout << direction[i] << " ";
-
        	double u = direction[0]*direction[0] + direction[1]*direction[1] + direction[2]*direction[2];
        	double u_x = direction[0] / sqrt(u);
        	double u_y = direction[1] / sqrt(u);
@@ -51,12 +47,8 @@ class Vertex3d
 	    p(0,0) = x;
 	    p(1,0) = y;
 	    p(2,0) = z;
-	    cout << "initial matrix: " << endl;
-	    cout << p << endl;
 	    
 	    MatrixXd P = T + p;
-	    cout << "final matrix: " << endl;
-	    cout << P << endl;
 
 	    x = P(0,0);
 	    y = P(1,0);
@@ -65,9 +57,6 @@ class Vertex3d
 	void mirror(vector<double> plane)
 	{
 		//plane 1->x-y 2->y-z 3->z-x
-		cout << "direction vector: " << endl;
-		for (int i=0; i<plane.size(); i++)
-       		cout << plane[i] << " ";
 
        	double u = plane[0]*plane[0] + plane[1]*plane[1] + plane[2]*plane[2];
        	double a = plane[0] / sqrt(u);
@@ -92,20 +81,14 @@ class Vertex3d
 	    R(3,2) = 0;
 	    R(2,3) = -1*2*c*d;
 	    R(3,3) = 0;
-	    cout << "Reflection matrix: " << endl;
-	    cout << R << endl;
 	    
 	    MatrixXd p(4,1);
 	    p(0,0) = x;
 	    p(1,0) = y;
 	    p(2,0) = z;
 	    p(3,0) = 1;
-	    cout << "initial matrix: " << endl;
-	    cout << p << endl;
 	    
 	    MatrixXd P = R*p;
-	    cout << "final matrix: " << endl;
-	    cout << P << endl;
 
 	    x = P(0,0);
 	    y = P(1,0);
@@ -115,18 +98,15 @@ class Vertex3d
 	void rotate(vector<double> direction, double radian)
 	{
 		//direction protocol same as translate, degrees always clockwise
-		//cout << "direction vector: " << endl;
-		//for (int i=0; i<direction.size(); i++)
-       	//	cout << direction[i] << " ";
 
        	double sinx = sin(radian);
        	double cosx = cos(radian);
-       //	cout << endl << "sinx and cosx :" << sinx << " " << cosx << endl;
+
        	double u = direction[0]*direction[0] + direction[1]*direction[1] + direction[2]*direction[2];
        	double u_x = direction[0] / sqrt(u);
        	double u_y = direction[1] / sqrt(u);
        	double u_z = direction[2] / sqrt(u);
-       	//cout<<"u_x: "<<u_x<<"u_y: "<<u_y<<"u_z: "<<u_z<<endl;
+
        	MatrixXd R(3,3);
 	    R(0,0) = cosx + (u_x*u_x)*(1-cosx);
 	    R(1,0) = u_y*u_x*(1-cosx) - u_z*sinx;
@@ -137,19 +117,13 @@ class Vertex3d
 	    R(2,1) = u_z*u_y*(1-cosx) - u_x*sinx;
 	    R(1,2) = u_z*u_y*(1-cosx) + u_x*sinx;
 	    R(2,2) = cosx + (u_z*u_z)*(1-cosx);
-	    //cout << "Rotation matrix: " << endl;
-	    //cout << R << endl;
-	    
+
 	    MatrixXd p(3,1);
 	    p(0,0) = x;
 	    p(1,0) = y;
 	    p(2,0) = z;
-	    //cout << "initial matrix: " << endl;
-	    //cout << p << endl;
 	    
 	    MatrixXd P = R*p;
-	    //cout << "final matrix: " << endl;
-	    //cout << P << endl;
 
 	    x = P(0,0);
 	    y = P(1,0);
@@ -391,6 +365,7 @@ class Vertex2d
 			cx=1;
 		else
 			cy=1;
+
 		MatrixXd T(2,2);
 	    T(0,0) = 1;
 	    T(1,0) = cx * factor;
@@ -602,52 +577,24 @@ class auxiliary
 };
 
 
-
-
-
-
-
-
 class projection
 {
 	public:
 	object3d solid;
 	object2d proj;
 	vector<double> direction;
-	// vector<Vertex2d> intersec_vertex;
 	
 	void project()
-	{
-		cout<<"**********************************in project()"<<endl;
-		cout<<"direction in project:"<<endl;
-		for (int i = 0; i < direction.size(); ++i)
-		{
-			cout<<direction[i]<<" ";
-
-		}
-		cout<<endl<<"$$$$$"<<endl;
-		
+	{		
 		object2d obj1;
 		int num_vertices = solid.vertices.size();
 		int num_edges = solid.edges.size();
-		// cout<<"vertex in solid :"<<endl;
-		// for (int i = 0; i < num_vertices; ++i)
-		// {
-		// 	cout<<solid.vertices[i].x<<" "<<solid.vertices[i].y<<" "<<solid.vertices[i].z<<endl;
-		// }
-		// cout<<"$$$$$";
-		
-		// cout<<"edges in solid :"<<endl;
-		// for (int i = 0; i < num_edges; ++i)
-		// {
-		// 	cout<<solid.edges[i].v1.x<<" "<<solid.edges[i].v1.y<<" "<<solid.edges[i].v1.z<<"    ";
-		// 	cout<<solid.edges[i].v2.x<<" "<<solid.edges[i].v2.y<<" "<<solid.edges[i].v2.z<<endl;
-		// }
-		// cout<<"$$$$$";
+
 		for(int i = 0; i < num_vertices; i++)
 		{
 			obj1.vertices.push_back(project_v(solid.vertices[i]));
 		}
+
 		for(int i = 0;i < num_edges; i++)
 		{
 			obj1.edges.push_back(project_e(solid.edges[i]));
@@ -656,6 +603,7 @@ class projection
 		proj = obj1;
 		set_bool();
 	}
+
 	Vertex2d project_v(Vertex3d v)
 	{
 		///
@@ -668,7 +616,6 @@ class projection
 		double angle = rotation_angle();
 		double angle_degree = angle*180/3.14;
 		angle_degree = floor(10*angle_degree)/10; 
-		//cout<<"rotation angle :"<<angle_degree;
 		angle = angle_degree*3.14/180;
 		
 		vector<double> rot_axis;
@@ -678,40 +625,23 @@ class projection
 			rot_axis.push_back(-1 *direction[1]);
 		rot_axis.push_back(direction[0]);
 		rot_axis.push_back(0);
-		/*cout<<"rotate axis:"<<endl;
-		for (int i = 0; i < rot_axis.size(); ++i)
-		{
-			cout<<rot_axis[i]<<" ";
 
-		}
-		cout<<endl<<"$$$$$"<<endl;
-		*/
 		if (!(rot_axis[0] == 0 && rot_axis[1] == 0 && rot_axis[2] == 0))
-		v_copy.rotate(rot_axis, angle);
-		//cout<<"##############################################";
-		//cout<<"v_copy: "<<v_copy.x<<" "<<v_copy.y<<" "<<v_copy.z<<endl;
-		
-		//cout<<endl<<"$$$$$"<<endl;
+			v_copy.rotate(rot_axis, angle);
 		
 		v1.x = v_copy.x;
 		v1.y = v_copy.y;
-		// cout<<"Vertex name "<<v_copy.name;
-		// cout<<" z-coordinate "<<v_copy.z<<endl;
 		v1.z = v_copy.z;
 		v1.proj_of = v;
 		v1.name = v_copy.name;
 		return v1;
 	}
 
-
 	Edge2d project_e(Edge3d e)
 	{
 		///
 		/// 
 		///
-		
-		//cout<<e.v1.x<<" "<<e.v1.y<<" "<<e.v1.z<<"    ";
-		//cout<<e.v2.x<<" "<<e.v2.y<<" "<<e.v2.z<<endl;
 		Edge2d e1;
 		e1.v1 = project_v(e.v1);
 		e1.v2 = project_v(e.v2);
@@ -741,14 +671,6 @@ class projection
 
 	double rotation_angle()
 	{
-		/*cout<<"direction in rotation_angle:"<<endl;
-		for (int i = 0; i < direction.size(); ++i)
-		{
-			cout<<direction[i]<<" ";
-
-		}
-		cout<<endl<<"$$$$$"<<endl;
-		*/
 		double a = direction[0];
 		double b = direction[1];
 		double c = direction[2];
@@ -759,90 +681,36 @@ class projection
 		return theta;
 	}
 
-	// void seperate()
-	// {
-	// 	object2d s1;
-	// 	for (int i = 0; i < proj.edges.size(); ++i)
-	// 	{
-	// 		vector<Vertex2d> intersec_vertex;
-	// 		Edge2d e1 = proj.edges[i];
-	// 		e1.v1.length = 0;
-	// 		for (int j = 0; j < proj.edges.size(); ++j)
-	// 		{
-	// 			Edge2d e2 = proj.edges[j];
-
-	// 			intersec_vertex.push_back(e1.v1);
-
-	// 			// if (e1 != e2)
-	// 			// {
-	// 				intersection(e1, e2, intersec_vertex);
-
-	// 			// }
-	// 		}
-	// 		intersec_vertex.push_back(e1.v2);
-
-	// 		for (int j = 0; j < intersec_vertex.size(); ++j)
-	// 		{
-	// 			for (int k = j+1; k < intersec_vertex.size(); ++k)
-	// 			{
-	// 				if(intersec_vertex[i].length > intersec_vertex[j].length)
-	// 					swap(intersec_vertex[i], intersec_vertex[j]);
-	// 			}
-	// 		}
-
-	// 		for (int j = 0; j < intersec_vertex.size()-1; ++j)
-	// 		{
-	// 			s1.edges.push_back(Edge2d(intersec_vertex[j], intersec_vertex[j+1]));
-	// 		}
-	
-	// 	}
-	// 	proj = s1;
-	// }
 	void separate()
 	{
-		cout<<"yo"<<endl;
 		vector<Edge2d> new_edges;
-		// cout<<"yoo"<<endl;
 		for (int i = 0; i < proj.edges.size(); i++)
 		{
-			cout<<"yooo "<<i<<endl;
 			vector<Vertex2d> cutpoints;
-			// cout<<"yoooo "<<i<<endl;
 			for(int j = 0; j < proj.edges.size(); j++)
 			{
-				cout<<"    yooooo "<<j<<endl;
 				Vertex2d v;
-				// cout<<"yoooooo "<<j<<endl;
 				if(i != j)
 				{
 					if(cut_exist(proj.edges[i], proj.edges[j]))
 					{
 						v = find_cut(proj.edges[i], proj.edges[j]);
-						if(locate_cut(v, proj.edges[i]))
-						{
+						if(locate_cut(v, proj.edges[i]) && locate_cut(v, proj.edges[j]))
 							cutpoints.push_back(v);
-						}
 					}
 				}
 			}
-			cout<<"**************** "<<cutpoints.size()<<endl;
 			if(cutpoints.size()>0)
 			{
-				cout<<"chup be"<<endl;
 				sort(cutpoints);
-				cout<<"Chup!!"<<endl;
 				create_edges(cutpoints, proj.edges[i], new_edges);
-				cout<<"Thak gaya main"<<endl;
 			}
 			else
 			{
 				new_edges.push_back(proj.edges[i]);
 			}
 		}
-		// separated.vertices = proj.vertices;
 		proj.edges = new_edges;
-		// separated.surfaces = proj.surfaces;
-		// proj = separated;
 	}
 
 	bool cut_exist(Edge2d e1, Edge2d e2)
@@ -855,14 +723,14 @@ class projection
 		double y3 = e2.v1.y;
 		double x4 = e2.v2.x;
 		double y4 = e2.v2.y;
-		if(x2 != x1 && x4 != x3)
+		if(abs(x2 - x1) > 0.0001 && abs(x4 - x3) > 0.0001)
 		{
 			double m1 = (y2 - y1)/(x2 - x1);
 			double m2 = (y4 - y3)/(x4 - x3);
-			if(m1 != m2)
+			if(abs(m1 - m2) > 0.0001)
 				return true;
 		}
-		if(((x2 == x1) && (x3 != x4)) || ((x2 != x1) && (x3 ==x4)))
+		if((abs(x2 - x1) < 0.0001 && abs(x3 - x4) > 0.0001) || (abs(x2 - x1) > 0.0001 && abs(x3 - x4) < 0.0001))
 			return true;
 		return false;
 	}
@@ -873,24 +741,22 @@ class projection
 		double m1, c1;
 		double x2_0 = e2.v1.x, y2_0 = e2.v1.y, x2_1 = e2.v2.x, y2_1 = e2.v2.y;
 		double m2, c2;
-		double x0,y0;
+		double x0, y0;
 		Vertex2d v;
 		
 
-		if ((x1_0 == x1_1) && (x2_0 == x2_1))
+		if ((abs(x1_0 - x1_1) < 0.0001) && (abs(x2_0 - x2_1) < 0.0001))
 		{
-			//both slope is infinite
 			cout<<"no intersection";
-
 		}
-		else if ((x1_0 == x1_1) && (x2_0 != x2_1))
+		else if ((abs(x1_0 - x1_1) < 0.0001) && (abs(x2_0 - x2_1) > 0.0001))
 		{
 			x0 = x1_0;
 			m2 = (y2_0 - y2_1)/(x2_0 -x2_1);
 			c2 = (y2_0*x2_1 - y2_1*x2_0)/(x2_1 - x2_0);
 			y0 = m2*x0 + c2;
 		}
-		else if ((x1_0 != x1_1) && (x2_0 == x2_1))
+		else if ((abs(x1_0 - x1_1) > 0.0001) && (abs(x2_0 - x2_1) < 0.0001))
 		{
 			x0 = x2_0;
 			m1 = (y1_0 - y1_1)/(x1_0 -x1_1);
@@ -903,7 +769,7 @@ class projection
 			c1 = (y1_0*x1_1 - y1_1*x1_0)/(x1_1 - x1_0);
 			m2 = (y2_0 - y2_1)/(x2_0 -x2_1);
 			c2 = (y2_0*x2_1 - y2_1*x2_0)/(x2_1 - x2_0);
-			if (m1==m2)
+			if (abs(m1 - m2) < 0.0001)
 			{
 				cout<<"no intersection"<<endl;
 			}
@@ -927,7 +793,7 @@ class projection
 			return true;
 		else if((v.x > e.v1.x) && (v.x < e.v2.x))
 			return true;
-		else if(e.v1.x - e.v2.x < 0.00001)
+		else if(e.v1.x - e.v2.x < 0.0001)
 		{
 			if((v.y < e.v1.y) && (v.y > e.v2.y))
 				return true;
@@ -937,13 +803,13 @@ class projection
 		return false;
 	}
 
-	void sort(vector<Vertex2d> vec)
+	void sort(vector<Vertex2d> &vec)
 	{
 		bool flag_x = false;
 		double x = vec[0].x;
 		for(int i = 0; i < vec.size(); i++)
 		{
-			if(vec[i].x - x > 0.00001)
+			if(abs(vec[i].x - x) > 0.0001)
 			{
 				flag_x = true;
 			}
@@ -955,49 +821,40 @@ class projection
 			{
 				if(flag_x)
 				{
-					if(vec[i].x > vec[j].x)
+					if(vec[i].x - vec[j].x > 0.0001)
 						swap(vec[i], vec[j]);
 				}
 				else
 				{
-					if(vec[i].y > vec[j].y)
+					if(vec[i].y - vec[j].y > 0.0001)
 						swap(vec[i], vec[j]);
 				}
 			}
 		}
 	}
 
-	void create_edges(vector<Vertex2d> v, Edge2d e, vector<Edge2d> new_edges)
+	void create_edges(vector<Vertex2d> v, Edge2d e, vector<Edge2d> &new_edges)
 	{
 		Vertex2d v1;
 		Vertex2d v2;
-		cout<<"    yo"<<endl;
-		if(e.v1.x - e.v2.x < 0.00001)
+		if(abs(e.v1.x - e.v2.x) > 0.0001)
 		{
-			if(e.v1.x < e.v2.x)
-			{
+			if(e.v2.x - e.v1.x > 0.0001)
 				v1 = e.v1;
-			}
 			else
-			{
 				v1 = e.v2;
-			}
 			v2 = v[0];
 		}
 		else
 		{
-			if(e.v1.y < e.v2.y)
-			{
+			if(e.v2.y - e.v1.y > 0.0001)
 				v1 = e.v1;
-			}
 			else
-			{
 				v1 = e.v2;
-			}
 			v2 = v[0];
 		}
-		cout<<"    Ab rona aa raha hai"<<endl;
-		for(int i = 0; i < v.size() - 1; i++)
+
+		for(int i = 0; i < v.size(); i++)
 		{
 			Edge2d e1;
 			e1.v1 = v1;
@@ -1007,42 +864,32 @@ class projection
 			Edge3d e2;
 			Vertex3d v3;
 			Vertex3d v4;
-			cout<<"    Ro doon kya? "<<i<<endl;
 			find_coordinates(e, v1, v3);
 			find_coordinates(e, v2, v4);
 			e2.v1 = v3;
 			e2.v2 = v4;
 			e1.proj_of = e2;
-
 			new_edges.push_back(e1);
-
 			v1 = v[i];
-			v2 = v[i+1];
+			if(i != v.size() - 1)
+				v2 = v[i+1];
 		}
 		
-		if(e.v1.x - e.v2.x < 0.00001)
+		if(abs(e.v1.x - e.v2.x) > 0.0001)
 		{
-			v1 = v[v.size()];
-			if(e.v1.x < e.v2.x)
-			{
+			v1 = v[v.size() - 1];
+			if(e.v2.x - e.v1.x > 0.0001)
 				v2 = e.v2;
-			}
 			else
-			{
 				v2 = e.v1;
-			}
 		}
 		else
 		{
-			v1 = v[v.size()];
-			if(e.v1.y < e.v2.y)
-			{
+			v1 = v[v.size() - 1];
+			if(e.v2.y - e.v1.y > 0.0001)
 				v2 = e.v2;
-			}
 			else
-			{
 				v2 = e.v1;
-			}
 		}
 
 		Edge2d e1;
@@ -1068,7 +915,7 @@ class projection
 		double x1 = e.v1.x;double y1 = e.v1.y;double x2 = e.v2.x;double y2 = e.v2.y;
 		double x0 = v.x, y0 = v.y;
 		double lambda;
-		if(x1 - x2 > 0.00001)
+		if(abs(x1 - x2) > 0.0001)
 		{
 			lambda = (x0 - x1)/(x2 - x0);
 		}
@@ -1081,173 +928,42 @@ class projection
 		v_3d.z = (e.proj_of.v1.z + lambda*e.proj_of.v2.z)/(1 + lambda);
 	}
 
-	// void intersection(Edge2d e1, Edge2d e2, vector<Vertex2d> intersec_vertex)
-	// {
-	// 	double x1_0 = e1.v1.x, y1_0 = e1.v1.y, x1_1 = e1.v2.x, y1_1 = e1.v2.y;
-	// 	double m1, c1;
-	// 	double x2_0 = e2.v1.x, y2_0 = e2.v1.y, x2_1 = e2.v2.x, y2_1 = e2.v2.y;
-	// 	double m2, c2;
-	// 	double x0,y0;
-	// 	Vertex2d v;
-		
-
-	// 	if ((x1_0 == x1_1) && (x2_0 == x2_1))
-	// 	{
-	// 		//both slope is infinite
-	// 		cout<<"no intersection";
-
-	// 	}
-	// 	else if ((x1_0 == x1_1) && (x2_0 != x2_1))
-	// 	{
-	// 		x0 = x1_0;
-	// 		m2 = (y2_0 - y2_1)/(x2_0 -x2_1);
-	// 		c2 = (y2_0*x2_1 - y2_1*x2_0)/(x2_1 - x2_0);
-	// 		y0 = m2*x0 + c2;
-	// 	}
-	// 	else if ((x1_0 != x1_1) && (x2_0 == x2_1))
-	// 	{
-	// 		x0 = x2_0;
-	// 		m1 = (y1_0 - y1_1)/(x1_0 -x1_1);
-	// 		c1 = (y1_0*x1_1 - y1_1*x1_0)/(x1_1 - x1_0);
-	// 		y0 = m1*x0 + c1;
-	// 	}
-	// 	else
-	// 	{
-	// 		m1 = (y1_0 - y1_1)/(x1_0 -x1_1);
-	// 		c1 = (y1_0*x1_1 - y1_1*x1_0)/(x1_1 - x1_0);
-	// 		m2 = (y2_0 - y2_1)/(x2_0 -x2_1);
-	// 		c2 = (y2_0*x2_1 - y2_1*x2_0)/(x2_1 - x2_0);
-	// 		if (m1==m2)
-	// 		{
-	// 			cout<<"no intersection"<<endl;
-	// 		}
-	// 		else
-	// 		{
-	// 			x0 = (c2-c1)/(m1-m2);
-	// 			y0 = (m1*c2 - c1*m2)/(m1-m2);
-	// 		}
-
-	// 	}		
-
-			
-	// 	double a,b,a1,a2,b1,b2;
-	// 	a = sqrt((y1_0-y1_1)*(y1_0-y1_1) + (x1_0-x1_1)*(x1_0-x1_1));
-	// 	b = sqrt((y2_0-y2_1)*(y2_0-y2_1) + (x2_0-x2_1)*(x2_0-x2_1));
-	// 	a1 = sqrt((y1_0-y0)*(y1_0-y0) + (x1_0-x0)*(x1_0-x0));
-	// 	a2 = sqrt((y0-y1_1)*(y0-y1_1) + (x0-x1_1)*(x0-x1_1));
-	// 	b1 = sqrt((y0-y2_1)*(y0-y2_1) + (x0-x2_1)*(x0-x2_1));
-	// 	b2 = sqrt((y2_0-y0)*(y2_0-y0) + (x2_0-x0)*(x2_0-x0));
-	// 	v.length = a1;
-	// 	e1.v2.length = a;
-	// 	v.x = x0;
-	// 	v.y = y0;
-	// 	v.z = 0;
-	// 	v.name = "";
-	// 	if (a == (a1+a2))//also check that none of a1,a2,b1,b2 != 0
-	// 		if (b == (b1+b2))
-	// 		{
-	// 			//intersection exist
-	// 			cout<<"intersection"<<endl;
-	// 			intersec_vertex.push_back(v);
-				
-	// 		}
-				
-	// }
-
 	void set_bool()
 	{
 		separate();
-		for(int i = 0; i < proj.vertices.size(); i++)
-		{
-			cout<<solid.vertices[i].name<<" "<<solid.vertices[i].x<<" "<<solid.vertices[i].y<<" "<<solid.vertices[i].z<<endl;
-		}
-		cout<<"Edges of the projection without setting hidden"<<endl<<endl;
-		for (int i = 0; i < proj.edges.size(); ++i)
-		{
-			cout<<proj.edges[i].v1.x<<" "<<proj.edges[i].v1.y<<" "<<proj.edges[i].v1.z<<"   "<<proj.edges[i].v2.x<<" "<<proj.edges[i].v2.y<<" "<<proj.edges[i].v2.z<<"   "<<proj.edges[i].hidden<<" "<<proj.edges[i].name<<endl;
-		}
-		// cout<<endl<<position_fore(solid.vertices[13], solid.surfaces[6])<<endl;
-		// int i = 20;
 		for(int i = 0; i < proj.edges.size(); i++)
 		{
-			cout<<endl<<"checking edge: "<<proj.edges[i].v1.x<<" "<<proj.edges[i].v1.y<<" "<<proj.edges[i].v1.z<<"   "<<proj.edges[i].v2.x<<" "<<proj.edges[i].v2.y<<" "<<proj.edges[i].v2.z<<"   "<<proj.edges[i].hidden<<" "<<proj.edges[i].name<<endl;
 			if (proj.edges[i].hidden == false)
 				proj.edges[i].hidden=check_hidden(proj.edges[i]);
-			cout<<endl<<"output edge: "<<proj.edges[i].v1.x<<" "<<proj.edges[i].v1.y<<" "<<proj.edges[i].v1.z<<"   "<<proj.edges[i].v2.x<<" "<<proj.edges[i].v2.y<<" "<<proj.edges[i].v2.z<<"   "<<proj.edges[i].hidden<<" "<<proj.edges[i].name<<endl;
-			cout<<"**********************************************************************"<<endl;
 		}
 	}
 
 	bool check_hidden(Edge2d e)
 	{
-		// int i = 6;
 		for(int i = 0; i < solid.surfaces.size(); i++)
 		{
-			// cout<<"surface used:"<<endl;
-			// 	for (int j = 0; j < solid.surfaces[i].edges.size(); ++j)
-			// 	{
-			// 		cout<<solid.surfaces[i].edges[j].v1.x<<" "<<solid.surfaces[i].edges[j].v1.y<<" "<<solid.surfaces[i].edges[j].v1.z<<"   ";
-			// 		cout<<solid.surfaces[i].edges[j].v2.x<<" "<<solid.surfaces[i].edges[j].v2.y<<" "<<solid.surfaces[i].edges[j].v2.z<<"   ";
-			// 		cout<<solid.surfaces[i].edges[j].name<<endl;
-			// 	}
-			// 	cout<<"$$$$$"<<endl;
 			if(hid_by_surf(e, solid.surfaces[i]))
-			{
-				cout<<"surface used:"<<endl;
-				for (int j = 0; j < solid.surfaces[i].edges.size(); ++j)
-				{
-					cout<<solid.surfaces[i].edges[j].v1.x<<" "<<solid.surfaces[i].edges[j].v1.y<<" "<<solid.surfaces[i].edges[j].v1.z<<"   ";
-					cout<<solid.surfaces[i].edges[j].v2.x<<" "<<solid.surfaces[i].edges[j].v2.y<<" "<<solid.surfaces[i].edges[j].v2.z<<"   ";
-					cout<<solid.surfaces[i].edges[j].name<<endl;
-				}
-				cout<<"$$$$$"<<endl;
 				return true;
-				
-			}
 		}
 		return false;
 	}
 
 	bool hid_by_surf(Edge2d e, Surface3d surface)
 	{
-		cout<<"&&&&&&&&&&&&"<<endl;
 		
 		Vertex3d v1 = e.proj_of.v1;
 		Vertex3d v2 = e.proj_of.v2;
-		// cout<<"Position_fore result "<<position_fore(v1, surface)<<" "<<position_fore(v2, surface)<<endl;
-		// cout<<"Vertex1 "<<v1.x<<" "<<v1.y<<" "<<v1.z<<endl;
 		
 		if(position_fore(v1, surface) && position_fore(v2, surface))
-		{
-			//e.hidden = false;
-			cout<<"v1 ahead v2 ahead"<<endl;
 			return false;
-		}
 		else if(position_fore(v1, surface))
-		{
-			//e.hidden = false;
-			cout<<"v1 ahead v2 back"<<endl;
 			return false;
-		}
 		else if(position_fore(v2, surface))
-		{
-			cout<<"v1 back v2 ahead"<<endl;
-			//e.hidden = false;
 			return false;
-		}	
 		else
 		{
-			cout<<"v1 back v2 back"<<endl;
-			// cout<<"Calling inside"<<endl;
-			// cout<<"***************************************************"<<endl;
 			if(inside(e, project_s(surface))) 
-			{
-				//e.hidden = true;
-				cout<<"Inside success"<<endl;
-				// cout<<"*****************************************************"<<endl;
 				return true;
-				
-			}
 			else
 				return false;
 		}
@@ -1257,58 +973,27 @@ class projection
 	{
 		Edge3d e1 = surface.edges[1];
 		Edge3d e2 = surface.edges[2];
-		//find cross product of e1 and e2 to get a,b,c;
-		/*cout<<"vector e1: ";
-		cout<<e1.v1.x<<" "<<e1.v1.y<<" "<<e1.v1.z<<"    ";
-		cout<<e1.v2.x<<" "<<e1.v2.y<<" "<<e1.v2.z<<endl;
 
-
-		cout<<"vector e2: ";
-		cout<<e2.v1.x<<" "<<e2.v1.y<<" "<<e2.v1.z<<"    ";
-		cout<<e2.v2.x<<" "<<e2.v2.y<<" "<<e2.v2.z<<endl;
-		*/
 		vector<double> w1;
 		w1.push_back(e1.v1.x - e1.v2.x);
 		w1.push_back(e1.v1.y - e1.v2.y);
 		w1.push_back(e1.v1.z - e1.v2.z);
-		/*cout<<"w1 :"<<endl;
-		for (int i = 0; i < w1.size(); ++i)
-		{
-			cout<<w1[i];
-		}
-		cout<<"&&&&&"<<endl;
-		*/
+
 		vector<double> w2;
 		w2.push_back(e2.v1.x - e2.v2.x);
 		w2.push_back(e2.v1.y - e2.v2.y);
 		w2.push_back(e2.v1.z - e2.v2.z);
-		/*cout<<"w2 :"<<endl;
-		for (int i = 0; i < w2.size(); ++i)
-		{
-			cout<<w2[i];
-		}
-		cout<<"&&&&&"<<endl;
-		*/
+
 		vector<double> w3 = cross(w1,w2);
-		/*cout<<"w3 :"<<endl;
-		for (int i = 0; i < w3.size(); ++i)
-		{
-			cout<<w3[i];
-		}
-		cout<<"&&&&&"<<endl;
-		*/
+
 		double a = w3[0];
 		double b = w3[1];
 		double c = w3[2];
 		double d = 0;
-		//cout<<"a = "<<a<<" b = "<<b<<" c = "<<c<<endl;
 		d = (a*(e1.v1.x) + b*(e1.v1.y) + c*(e1.v1.z));
-		// cout<<"d = "<<d<<" c = "<<c<<" a = "<<a<<" b = "<<b<<endl;
 		if ((a*direction[0] + b*direction[1] + c*direction[2]) == 0)
 			return true;
 		double k = (d - a*(v.x) -b*(v.y) -c*(v.z))/(a*direction[0] + b*direction[1] + c*direction[2]);
-		// cout<<v.name<<endl;
-		// cout<<"k = "<<k<<endl;
 		if(k > 0)
 			return true;
 		return false;
@@ -1316,10 +1001,6 @@ class projection
 
 	bool inside(Edge2d e, Surface2d surface)
 	{
-		//cout<<"vector e: ";
-		//cout<<e.v1.x<<" "<<e.v1.y<<" "<<e.v1.z<<"    ";
-		//cout<<e.v2.x<<" "<<e.v2.y<<" "<<e.v2.z<<endl;
-		// cout<<"Position_vert results "<<position_vert(e.v1, surface)<<" "<<position_vert(e.v2, surface)<<endl;
 		if((position_vert(e.v1, surface) == 0) || (position_vert(e.v2, surface) == 0))
 			return false;
 		else if(position_vert(e.v1, surface)*position_vert(e.v2, surface) == 1)
@@ -1328,21 +1009,10 @@ class projection
 			return true;
 		else
 		{
-			// cout<<"    Calling mid_check"<<endl;
-			// cout<<"    ****************************************************"<<endl;
 			if(mid_check(e.v1, e.v2, surface) == 1)
-			{
-				// cout<<"mid-check valid "<<endl;
-				// cout<<"    ****************************************************"<<endl;
 				return true;
-			}
-			else
-			{
-				// cout<<"    mid-check not valid "<<endl;
-				// cout<<"    ****************************************************"<<endl;
-					
+			else	
 				return false;
-			}
 		}
 	}
 
@@ -1351,17 +1021,6 @@ class projection
 		///
 		/// returns 0 if vert outside, 1 if inside, 2 if on the line
 		///
-		/*cout<<"surface edges:"<<endl;
-		for (int i = 0; i < surface.edges.size(); ++i)
-		{
-			cout<<surface.edges[i].v1.x<<" "<<surface.edges[i].v1.y<<" "<<surface.edges[i].v1.z<<"    ";
-			cout<<surface.edges[i].v2.x<<" "<<surface.edges[i].v2.y<<" "<<surface.edges[i].v2.z<<endl;
-		
-		}*/
-		// cout<<"Ray Casting result of "<<v.name<<" "<<ray_casting(v,surface)<<endl;
-		// cout<<"////////////////////////////////////"<<endl;
-		// cout<<"        Calling on boundary"<<endl;
-		// cout<<"        ****************************************************"<<endl;
 		if(on_boundary(v, surface))
 			return 2;
 		else if(ray_casting(v, surface) % 2 == 1)
@@ -1375,17 +1034,10 @@ class projection
 
 	bool on_boundary(Vertex2d v, Surface2d surface)
 	{
-		// cout<<v.name<<" "<<v.x<<"  "<<v.y<<endl;
 		for (int i = 0; i < surface.edges.size(); i++)
 		{
-			// cout<<"            Calling on edge for edge "<<i<<endl;
-			// cout<<"            ****************************************************"<<endl;
 			if(on_edge(v, surface.edges[i]))
-			{
-				// cout<<"Vertex "<<v.name<<" "<<v.x<<" "<<v.y<<endl;
-				// cout<<"On edge "<<surface.edges[i].name<<endl;
 				return true;
-			}
 		}
 		return false;
 	}
@@ -1399,14 +1051,8 @@ class projection
 		double d1 = sqrt((v.x-x1)*(v.x-x1) + (v.y-y1)*(v.y-y1));
 		double d2 = sqrt((v.x-x2)*(v.x-x2) + (v.y-y2)*(v.y-y2));
 		double d = 	sqrt((x2-x1)*(x2-x1) + (y2-y1)*(y2-y1));
-		// cout<<"//////////////"<<endl;
-		// cout<<"                For "<<e.name<<" d = "<<d<<endl;
-		// cout<<"                d1 + d2 = "<<d1+d2<<endl;
-		if(abs(d1 + d2 - d) < 0.00001)
-		{
-			// cout<<"                Yayyyyyyyyyyyyyyyyyy"<<endl;
+		if(abs(d1 + d2 - d) < 0.0001)
 			return true;
-		}
 		return false;
 
 	}
@@ -1414,17 +1060,9 @@ class projection
 	int ray_casting(Vertex2d v, Surface2d surface)
 	{
 		int count = 0;
-		//cout<<"count initial: "<<count<<endl;
 		count = count + poly_vertex(v, surface);
-		// cout<<"Count after poly vertex "<<count<<endl;
-		//cout<<"count after poly_vertex: "<<count<<endl;
 		count = count + coincident_edge(v, surface);
-		// cout<<"Count after coincident edge "<<count<<endl;
-		//cout<<"count after coincident_edge: "<<count<<endl;
 		count = count + edge_intersect(v, surface);
-		// cout<<"Count after edge intersect "<<count<<endl;
-		// cout<<"Hence: "<<endl;
-		//cout<<"count edge_intersect: "<<count<<endl;
 		return count;
 	}
 
@@ -1447,9 +1085,7 @@ class projection
 		for (int i = 0; i < surface.num_edges; i++)
 		{
 			if((surface.edges[i].v1.y == v.y) && (surface.edges[i].v2.y == v.y))
-			{
 				count = count + check_side_edge(surface.edges[i], surface);
-			}
 		}
 		return count;
 	}
@@ -1460,18 +1096,12 @@ class projection
 		for (int i = 0; i < surface.num_edges; i++)
 		{
 			double x0 = surface.edges[i].v1.x + (v.y - surface.edges[i].v1.y)*(surface.edges[i].v2.x - surface.edges[i].v1.x)/(surface.edges[i].v2.y - surface.edges[i].v1.y); 
-			if (x0>v.x)
+			if (x0 - v.x > 0.0001)
 			{
-				if((surface.edges[i].v1.y > v.y) && (surface.edges[i].v2.y < v.y))
+				if((surface.edges[i].v1.y - v.y > 0.0001) && (v.y - surface.edges[i].v2.y > 0.0001))
 					count = count + 1;
-				else if((surface.edges[i].v1.y < v.y) && (surface.edges[i].v2.y > v.y))
+				else if((v.y - surface.edges[i].v1.y > 0.0001) && (surface.edges[i].v2.y - v.y > 0.0001))
 					count = count + 1;
-			}
-			if(i==0 || i==2)
-			{
-				// cout<<"Edge "<<"v1 = "<<surface.edges[i].v1.x<<" "<<surface.edges[i].v1.y<<" "<<surface.edges[i].v1.z<<" v2 = "<<surface.edges[i].v2.x<<" "<<surface.edges[i].v2.y<<" "<<surface.edges[i].v2.z<<" "<<surface.edges[i].name<<endl;
-				// cout<<"Vertex "<<"x "<<v.x<<" y "<<v.y<<endl;
-				// cout<<"Solution x "<<x0<<endl;
 			}
 		}
 		return count;
@@ -1482,15 +1112,16 @@ class projection
 		vector<int> y;
 		for (int i = 0; i < surface.num_edges; i++)
 		{
-			if((surface.edges[i].v1.x == v.x) && (surface.edges[i].v1.y == v.y))
+			if((abs(surface.edges[i].v1.x - v.x) < 0.0001) && (abs(surface.edges[i].v1.y == v.y) < 0.0001))
 				y.push_back(surface.edges[i].v2.y);
-			else if((surface.edges[i].v2.x == v.x) && (surface.edges[i].v2.y == v.y))
+			else if((abs(surface.edges[i].v2.x == v.x) < 0.0001) && (abs(surface.edges[i].v2.y == v.y) < 0.0001))
 				y.push_back(surface.edges[i].v1.y);
 		}
-		if(y.size() != 2)
-			cout << "Error check_side_vert" << endl;
 		if ((y[0] - v.y)*(y[1] - v.y) < 0)
-			return 1;
+		{	
+			if((abs(y[0] - v.y) > 0.0001) && (abs(y[1] - v.y) > 0.0001))
+				return 1;
+		}
 	}
 
 	int check_side_edge(Edge2d e, Surface2d surface)
@@ -1507,31 +1138,32 @@ class projection
 		for (int i = 0; i < surface.num_edges; i++)
 		{
 			e1 = surface.edges[i];
-			if((e1.v1.x == v1.x) && (e1.v1.y == v1.y))
+			if((abs(e1.v1.x - v1.x) < 0.0001) && (abs(e1.v1.y - v1.y) < 0.0001))
 			{
-				if(!((e1.v2.x == v2.x) && (e1.v2.y == v2.y)))
+				if(!((abs(e1.v2.x - v2.x) < 0.0001) && (abs(e1.v2.y - v2.y) < 0.0001)))
 					y.push_back(v2.y);
 			}
-			else if((e1.v1.x == v2.x) && (e1.v1.y == v2.y))
+			else if((abs(e1.v1.x - v2.x) < 0.0001) && (abs(e1.v1.y - v2.y) < 0.0001))
 			{
-				if(!((e1.v2.x == v1.x) && (e1.v2.y == v1.y)))
+				if(!((abs(e1.v2.x - v1.x) < 0.0001) && (abs(e1.v2.y - v1.y) < 0.0001)))
 					y.push_back(v1.y);
 			}
-			else if((e1.v2.x == v2.x) && (e1.v2.y == v2.y))
+			else if((abs(e1.v2.x - v2.x) < 0.0001) && (abs(e1.v2.y - v2.y) < 0.0001))
 			{
-				if(!((e1.v1.x == v1.x) && (e1.v1.y == v1.y)))
+				if(!((abs(e1.v1.x - v1.x) < 0.0001) && (abs(e1.v1.y - v1.y) < 0.0001)))
 					y.push_back(v1.y);
 			}
-			else if((e1.v2.x == v1.x) && (e1.v2.y == v1.y))
+			else if((abs(e1.v2.x - v1.x) < 0.0001) && (abs(e1.v2.y - v1.y) < 0.0001))
 			{
-				if(!((e1.v1.x == v2.x) && (e1.v1.y == v2.y)))
+				if(!((abs(e1.v1.x - v2.x) < 0.0001) && (abs(e1.v1.y - v2.y) < 0.0001)))
 					y.push_back(v1.y);
 			}
 		}
-		if(y.size() != 2)
-			cout << "Error check_side_edge" << endl;
 		if((y[0] - v1.y)*(y[1] - v1.y) < 0)
-			return 1;
+		{
+			if((abs(y[0] - v1.y) > 0.0001) && (abs(y[1] - v1.y) > 0.0001))
+				return 1;
+		}
 	}
 
 	int mid_check(Vertex2d v1, Vertex2d v2, Surface2d surface)
@@ -1544,17 +1176,6 @@ class projection
 		v.y = (v1.y + v2.y)/2;
 		v.z = (v1.z + v2.z)/2;
 		v.name = "MID";
-		// if(v1.name=="E" && v2.name=="A")
-		// {
-		// 	cout<<endl<<v1.name<<" "<<v1.x<<" "<<v1.y<<endl;
-			// cout<<v.name<<" "<<v.x<<" "<<v.y<<endl;
-		// 	cout<<v2.name<<" "<<v2.x<<" "<<v2.y<<endl<<endl;
-		// 	cout<<"Surface "<<surface.edges[1].name<<" "<<surface.edges[1].v1.x<<" "<<surface.edges[1].v1.y<<" "<<surface.edges[1].v2.x<<" "<<surface.edges[1].v2.y<<endl;
-		// }
-		//cout<<"in mid_check: "<<position_vert(v,surface)<<endl;
-		// if(on_boundary(v,surface))
-			// return 
-		// cout<<"Position of midpoint "<<position_vert(v, surface)<<endl;
 		return position_vert(v, surface);
 	}
 
@@ -1568,7 +1189,6 @@ class projection
 	}
 };
 
-
 class rev_3dto2d
 {
 	public:
@@ -1576,6 +1196,7 @@ class rev_3dto2d
 	{
 		
 	}
+
 	vector<Vertex3d> cor_vertex(object2d obj1, object2d obj2, object2d obj3)//obj1: x-y, obj2: y-z, obj3: x-z;
 	{
 		vector<Vertex2d> set1 = obj1.vertices;
@@ -1583,18 +1204,7 @@ class rev_3dto2d
 		vector<Vertex2d> set3 = obj3.vertices;
 		vector<Vertex2d> v1_i,v1_j;
 		vector<Vertex3d> v2;
-		/*cout<<"set1 is : ";
-		for (int i = 0; i < set1.size(); ++i)
-		{
-			cout<<set1[i].x<<","<<set1[i].y<<","<<set1[i].z<<","<<set1[i].name<<endl;
-		}
-		cout<<"$$$$"<<endl;
-		cout<<"set2 is : ";
-		for (int i = 0; i < set2.size(); ++i)
-		{
-			cout<<set2[i].x<<","<<set2[i].y<<","<<set2[i].z<<","<<set2[i].name<<endl;
-		}
-		cout<<"$$$$"<<endl;*/
+
 		for (int i = 0; i < set1.size(); ++i)
 		{
 			int j = find(set2,set1[i]);
@@ -1606,19 +1216,6 @@ class rev_3dto2d
 			}
 		}
 
-		/*cout<<"v1_i is : ";
-		for (int i = 0; i < v1_i.size(); ++i)
-		{
-			cout<<v1_i[i].x<<","<<v1_i[i].y<<","<<v1_i[i].z<<","<<v1_i[i].name<<endl;
-		}
-		cout<<"$$$$"<<endl;
-
-		cout<<"v1_j is : ";
-		for (int i = 0; i < v1_j.size(); ++i)
-		{
-			cout<<v1_j[i].x<<","<<v1_j[i].y<<","<<v1_j[i].z<<","<<v1_j[i].name<<endl;
-		}
-		cout<<"$$$$"<<endl;*/
 		for (int i = 0; i < v1_i.size(); ++i)
 		{
 			int j = find(set3,v1_i[i]);
@@ -1690,19 +1287,10 @@ class rev_3dto2d
 
 	int find(vector<Vertex2d> set, Vertex2d s)
 	{
-		/*cout<<"set is : ";
-		for (int i = 0; i < set.size(); ++i)
-		{
-			cout<<set[i].x<<","<<set[i].y<<","<<set[i].z<<","<<set[i].name<<endl;
-		}
-		cout<<"$$$$"<<endl;
-		cout<<"s is "<<s.name;*/
 		for (int i = 0; i < set.size(); ++i)
 		{
 			string s1 = set[i].name; 
-			//cout<<" s1 is "<<s1<<endl;
-			//cout<<"condition :"<<(s1.compare(s.name)==0)<<endl;
-			if (s1.compare(s.name)==0)
+			if (s1.compare(s.name) == 0)
 				return i;
 
 		}
@@ -1714,12 +1302,10 @@ class rev_3dto2d
 		for (int i = 0; i < set.size(); ++i)
 		{
 			string s1 = set[i].name; 
-			//if ((s1.compare(s.name)) && (set[i].v1 == s.v1) && (set[i].v2 == s.v2))  
+			if (s1.compare(s.name) == 0)  
 				return i;
 
 		}
 		return -1;
 	}
-
-	
 };

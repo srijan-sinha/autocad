@@ -2,6 +2,7 @@
 // 2d object rendering all orthographic views if possible
 // 3d object refresh rate rendering
 
+#include <string>
 #ifndef GTKMM_EXAMPLE_MYAREA_H
 #define GTKMM_EXAMPLE_MYAREA_H
 #include "backend_header.h"
@@ -22,67 +23,10 @@ protected:
 
 #endif // GTKMM_EXAMPLE_MYAREA_H
 
-class ProjectionWindow : public Gtk::Window
-{
-public:
-  ProjectionWindow();
-  virtual ~ProjectionWindow();
-  Object3D* obj;
-  double plane[4];
-  bool create;
+#ifndef GTKMM_EXAMPLEWINDOW_H
+#define GTKMM_EXAMPLEWINDOW_H
 
-private:
-  // Signal handlers:
-  void on_button_submit();
-  void on_button_addpoint();
-  void on_button_addedge();
-  void on_button_addface();
-  void on_button_created();
-  
-  // Signals
-  bool pointsDone, init;
-
-  // Child widgets:
-  Gtk::Box m_Box;
-  Gtk::Frame m_point_frame, m_edge_frame, m_face_frame, m_plane_frame;
-  Gtk::Grid m_point_grid, m_edge_grid, m_face_grid, m_plane_grid;
-  Gtk::Entry m_entry_x, m_entry_y, m_entry_z, m_entry_label;
-  Gtk::Entry m_entry_a, m_entry_b, m_entry_c, m_entry_d;
-  Gtk::Entry m_edge_p1, m_edge_p2;
-  Gtk::Button m_submit, m_add_point;
-  Gtk::Button m_add_edge, m_add_face, m_create;
-  Gtk::CheckButton** m_face_point;
-};
-
-class ConstructWindow : public Gtk::Window
-{
-public:
-  ConstructWindow();
-  virtual ~ConstructWindow();
-  Projection2D* proj;
-  
-private:
-  // Signal handlers:
-  // void on_button_quit();
-  void on_button_submit();
-  void on_button_addpoint();
-  void on_button_addlabel();
-  void on_button_addedge();
-  void on_button_created();
-
-  int projection, create;
-  OrthoProjection* front, * top, * side;
-  ClusteredPoint* cp;
-
-  // Child widgets:
-  Gtk::Box m_Box;
-  Gtk::Frame m_point_frame, m_edge_frame;
-  Gtk::Grid m_point_grid, m_edge_grid;
-  Gtk::Entry m_entry_x, m_entry_y, m_entry_z, m_entry_label;
-  Gtk::Entry m_edge_p1, m_edge_p2;
-  Gtk::Button m_submit, m_add_point, m_add_label;
-  Gtk::Button m_add_edge, m_create;
-};
+#include <gtkmm.h>
 
 class MainWindow : public Gtk::Window
 {
@@ -90,14 +34,54 @@ public:
   MainWindow();
   virtual ~MainWindow();
 
-private:
-  // Signal handlers:
-  void on_button_numbered(const Glib::ustring& data);
+protected:
+  //Signal Handlers:
+  void on_button_2d_3d();
+  void on_button_3d_2d();
 
-  // Child widgets:
-  Gtk::Grid m_grid;
-  Gtk::Button m_button_1, m_button_2;
+  //Child widgets:
+  Gtk::Box m_Box;
+  Gtk::Frame m_Frame;
+  Gtk::Grid m_Grid1, m_Grid2;
+  Gtk::Button m_Button_2d_3d, m_Button_3d_2d;
 };
 
-#endif /* GTKMM_PROJWINDOW_H */
+class Input2dWindow : public Gtk::Window
+{
+public:
+  Input2dWindow();
+  virtual ~Input2dWindow();
+  string filename;
 
+protected:
+  //Signal Handlers
+  void on_button_submit();
+
+  //Child Widgets:
+  Gtk::Box m_box;
+  Gtk::Frame m_frame;
+  Gtk::Grid m_grid;
+  Gtk::Button m_button;
+  Gtk::Entry m_entry;
+};
+
+class Input3dWindow : public Gtk::Window
+{
+public:
+  Input3dWindow();
+  virtual ~Input3dWindow();
+  string filename;
+
+protected:
+  //Signal Handlers
+  void on_button_submit();
+
+  //Child Widgets:
+  Gtk::Box m_box;
+  Gtk::Frame m_frame;
+  Gtk::Grid m_grid;
+  Gtk::Button m_button;
+  Gtk::Entry m_entry;
+};
+
+#endif //GTKMM_EXAMPLEWINDOW_H

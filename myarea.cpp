@@ -43,6 +43,8 @@ bool MyArea::on_draw( const Cairo::RefPtr<Cairo::Context>& cr)
       dashes[1] = 0;
     cr->set_source_rgb(0.0, 0.0, 0.0);
     cr->set_dash(dashes, 0.0);
+    // cr->move_to(xc,yc);
+    // cr->line_to(xc, yc+200);
     cr->move_to(xc + 80*e.v1.x, yc - 80*e.v1.y);
     cr->line_to(xc + 80*e.v2.x, yc - 80*e.v2.y);
     cr->stroke();

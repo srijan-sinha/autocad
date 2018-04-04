@@ -8,7 +8,7 @@ int main(int argc, char** argv)
 
 	Gtk::Window win;
     win.set_title("ProCad");
-   	file_handle f = file_handle("input_3d_2.txt");
+   	file_handle f = file_handle("input_3d_3.txt");
 	object3d project = f.input3d();
 	
 	projection p;
@@ -18,8 +18,8 @@ int main(int argc, char** argv)
 	vector<double> x_z;
 
 	x_y.push_back(10);
-	x_y.push_back(11);
-	x_y.push_back(12);
+	x_y.push_back(10);
+	x_y.push_back(10);
 
 	y_z.push_back(-8);
 	y_z.push_back(5);
