@@ -46,7 +46,12 @@ void MainWindow::on_button_3d_2d()
 Input2dWindow::Input2dWindow()
 : m_button("Create"),
   m_frame1("Input for Creating 3D"),
-  m_frame2("3D Wireframe Output"),
+  m_frame2("Rotate 3D figure"),
+  m_frame3("3D Wireframe Output"),
+  m_button_r("Rotate Right"),
+  m_button_l("Rotate Left"),
+  m_button_u("Rotate Up"),
+  m_button_d("Rotate Down"),
   m_box(Gtk::ORIENTATION_VERTICAL)
 
 {
@@ -55,37 +60,68 @@ Input2dWindow::Input2dWindow()
   set_title("Input 2D object file");
 
   m_file1.set_max_length(50);
-  m_file1.set_text("Enter file name for x-y plane");
+  m_file1.set_text("test2_0.txt");
   m_file1.select_region(0, m_file1.get_text_length());
 
   m_file2.set_max_length(50);
-  m_file2.set_text("Enter file name for y-z plane");
+  m_file2.set_text("test2_1.txt");
   m_file2.select_region(0, m_file2.get_text_length());
 
   m_file3.set_max_length(50);
-  m_file3.set_text("Enter file name for z-x plane");
+  m_file3.set_text("test2_2.txt");
   m_file3.select_region(0, m_file3.get_text_length());
+
+  m_dir_x.set_max_length(40);
+  m_dir_x.set_text("10");
+  m_dir_x.select_region(0, m_dir_x.get_text_length());
+
+  m_dir_y.set_max_length(40);
+  m_dir_y.set_text("5");
+  m_dir_y.select_region(0, m_dir_y.get_text_length());
+
+  m_dir_z.set_max_length(40);
+  m_dir_z.set_text("12");
+  m_dir_z.select_region(0, m_dir_z.get_text_length());
 
   add(m_box);
 
   m_box.pack_start(m_frame1, Gtk::PACK_SHRINK, 10);
   m_box.pack_start(m_frame2, Gtk::PACK_EXPAND_WIDGET, 10);
+  m_box.pack_start(m_frame3, Gtk::PACK_EXPAND_WIDGET, 10);
   
-  m_frame1.add(m_grid);
+  m_frame1.add(m_grid1);
+  m_frame2.add(m_grid2);
 
-  m_grid.add(m_file1);
-  m_grid.attach_next_to(m_file2, m_file1, Gtk::POS_BOTTOM, 1, 1);
-  m_grid.attach_next_to(m_file3, m_file2, Gtk::POS_BOTTOM, 1, 1);
-  m_grid.attach_next_to(m_button, m_file3, Gtk::POS_BOTTOM, 1, 1);
+  m_grid1.add(m_file1);
+  m_grid1.attach_next_to(m_file2, m_file1, Gtk::POS_BOTTOM, 1, 1);
+  m_grid1.attach_next_to(m_file3, m_file2, Gtk::POS_BOTTOM, 1, 1);
+  m_grid1.attach_next_to(m_button, m_file3, Gtk::POS_BOTTOM, 1, 1);
+
+  m_grid1.attach_next_to(m_dir_x, m_file1, Gtk::POS_RIGHT, 1, 1);
+  m_grid1.attach_next_to(m_dir_y, m_file2, Gtk::POS_RIGHT, 1, 1);
+  m_grid1.attach_next_to(m_dir_z, m_file3, Gtk::POS_RIGHT, 1, 1);
+
+  m_grid2.add(m_button_l);
+  m_grid2.attach_next_to(m_button_r, m_button_l, Gtk::POS_RIGHT, 1, 1);
+  m_grid2.attach_next_to(m_button_u, m_button_r, Gtk::POS_RIGHT, 1, 1);
+  m_grid2.attach_next_to(m_button_d, m_button_u, Gtk::POS_RIGHT, 1, 1);
 
   m_area.set_size_request(600, 500);
-  m_frame2.add(m_area);
+  m_frame3.add(m_area);
   m_area.show();
   
   m_area.signal_draw().connect( sigc::mem_fun(*this, 
               &Input2dWindow::on_drawing));
   m_button.signal_clicked().connect( sigc::mem_fun(*this,
               &Input2dWindow::on_button_submit) );
+  m_button_l.signal_clicked().connect( sigc::mem_fun(*this,
+              &Input2dWindow::on_button_left) );
+  m_button_r.signal_clicked().connect( sigc::mem_fun(*this,
+              &Input2dWindow::on_button_right) );
+  m_button_u.signal_clicked().connect( sigc::mem_fun(*this,
+              &Input2dWindow::on_button_up) );
+  m_button_d.signal_clicked().connect( sigc::mem_fun(*this,
+              &Input2dWindow::on_button_down) );
   show_all_children();
 }
 
@@ -99,7 +135,62 @@ void Input2dWindow::on_button_submit()
   file_xy = m_file1.get_text();
   file_yz = m_file2.get_text();
   file_zx = m_file3.get_text();
+  double x = stod(m_dir_x.get_text());
+  double y = stod(m_dir_y.get_text());
+  double z = stod(m_dir_z.get_text());
+  // vector<double> dir;
+  dir.push_back(x);
+  dir.push_back(y);
+  dir.push_back(z);
 
+  file_handle f0 = file_handle(file_xy);
+  object2d p0 = f0.input2d();
+  file_handle f1 = file_handle(file_yz);
+  object2d p1 = f1.input2d();
+  file_handle f2 = file_handle(file_zx);
+  object2d p2 = f2.input2d();
+  rev_3dto2d r;
+  vector<Vertex3d> v = r.cor_vertex(p0,p1,p2);
+  vector<Edge3d> e = r.cor_edges(p0,p1,p2,v);
+
+  obj.edges = e;
+  obj.vertices = v;
+  // projection p;
+  p.solid = obj;
+  p.direction = dir;
+  p.project();
+  proje = p.proj;
+  cout<<dir.size()<<endl;
+  m_area.queue_draw();
+}
+
+void Input2dWindow::on_button_right()
+{
+  // double angle =5;
+  // dir[0] = dir[0] + amt;
+  
+  // p.direction = dir;
+  // cout<<p.solid.edges.size()<<endl;
+  // cout<<p.solid.vertices.size()<<endl;
+  
+  // p.project();
+  // proje = p.proj;
+  m_area.queue_draw();
+}
+
+void Input2dWindow::on_button_left()
+{
+  
+}
+
+void Input2dWindow::on_button_up()
+{
+  
+}
+
+void Input2dWindow::on_button_down()
+{
+  
 }
 
 bool Input2dWindow::on_drawing( const Cairo::RefPtr<Cairo::Context>& cr)
@@ -118,9 +209,9 @@ bool Input2dWindow::on_drawing( const Cairo::RefPtr<Cairo::Context>& cr)
   cr->set_line_width(3.0);
   Edge2d e;
 
-  for (int i = 0; i < obj.edges.size(); i++)
+  for (int i = 0; i < proje.edges.size(); i++)
   {
-    e = obj.edges[i];
+    e = proje.edges[i];
 
     cr->set_source_rgb(0.0, 0.0, 0.0);
     cr->set_dash(dashes, 0.0);
