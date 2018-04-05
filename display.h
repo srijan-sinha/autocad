@@ -66,6 +66,8 @@ protected:
   void on_button_left();
   void on_button_up();
   void on_button_down();
+  void on_button_scale();
+  void on_button_trans();
   bool on_drawing( const Cairo::RefPtr<Cairo::Context>& cr);
 
   //Child Widgets:
@@ -73,8 +75,8 @@ protected:
   Gtk::Box m_box;
   Gtk::Frame m_frame1, m_frame2, m_frame3;
   Gtk::Grid m_grid1, m_grid2;
-  Gtk::Button m_button, m_button_r, m_button_l, m_button_u, m_button_d;
-  Gtk::Entry m_file1, m_file2, m_file3, m_dir_x, m_dir_y, m_dir_z;
+  Gtk::Button m_button, m_button_r, m_button_l, m_button_u, m_button_d, m_button_scale, m_button_trans;
+  Gtk::Entry m_file1, m_file2, m_file3, m_dir_x, m_dir_y, m_dir_z, m_scale, m_trans_x, m_trans_y, m_trans_z, m_trans_amount;
 };
 
 class Input3dWindow : public Gtk::Window

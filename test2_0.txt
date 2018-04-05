@@ -1,0 +1,45 @@
+2d
+Vertices
+16
+0,0,0 A
+4,0,0 B
+4,4,0 C
+0,4,0 D
+0,0,0 E
+4,0,0 F
+4,4,0 G
+0,4,0 H
+1,3,0 I
+2,3,0 J
+2,4,0 K
+1,4,0 L
+1,3,0 M
+2,3,0 N
+2,4,0 O
+1,4,0 P
+Edges
+24
+A B
+B F
+F E
+E A
+C G
+G H
+H D
+D L
+K C
+A D
+C B
+G F
+H E
+L P
+P O
+O K
+I M
+M N
+N J
+L I
+P M
+O N
+K J
+I J

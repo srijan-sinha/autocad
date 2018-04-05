@@ -45,6 +45,8 @@ void MainWindow::on_button_3d_2d()
 
 Input2dWindow::Input2dWindow()
 : m_button("Create"),
+  m_button_scale("Scale"),
+  m_button_trans("Translate"),
   m_frame1("Input for Creating 3D"),
   m_frame2("Rotate 3D figure"),
   m_frame3("3D Wireframe Output"),
@@ -83,6 +85,26 @@ Input2dWindow::Input2dWindow()
   m_dir_z.set_text("12");
   m_dir_z.select_region(0, m_dir_z.get_text_length());
 
+  m_scale.set_max_length(40);
+  m_scale.set_text("Scale factor");
+  m_scale.select_region(0, m_scale.get_text_length());
+
+  m_trans_x.set_max_length(40);
+  m_trans_x.set_text("x dir");
+  m_trans_x.select_region(0, m_trans_x.get_text_length());
+
+  m_trans_y.set_max_length(40);
+  m_trans_y.set_text("y dir");
+  m_trans_y.select_region(0, m_trans_y.get_text_length());
+  
+  m_trans_z.set_max_length(40);
+  m_trans_z.set_text("z dir");
+  m_trans_z.select_region(0, m_trans_z.get_text_length());
+  
+  m_trans_amount.set_max_length(40);
+  m_trans_amount.set_text("trans amt");
+  m_trans_amount.select_region(0, m_trans_amount.get_text_length());
+  
   add(m_box);
 
   m_box.pack_start(m_frame1, Gtk::PACK_SHRINK, 10);
@@ -93,18 +115,27 @@ Input2dWindow::Input2dWindow()
   m_frame2.add(m_grid2);
 
   m_grid1.add(m_file1);
-  m_grid1.attach_next_to(m_file2, m_file1, Gtk::POS_BOTTOM, 1, 1);
-  m_grid1.attach_next_to(m_file3, m_file2, Gtk::POS_BOTTOM, 1, 1);
-  m_grid1.attach_next_to(m_button, m_file3, Gtk::POS_BOTTOM, 1, 1);
+  m_grid1.attach_next_to(m_file2, m_file1, Gtk::POS_RIGHT, 1, 1);
+  m_grid1.attach_next_to(m_file3, m_file2, Gtk::POS_RIGHT, 1, 1);
 
-  m_grid1.attach_next_to(m_dir_x, m_file1, Gtk::POS_RIGHT, 1, 1);
-  m_grid1.attach_next_to(m_dir_y, m_file2, Gtk::POS_RIGHT, 1, 1);
-  m_grid1.attach_next_to(m_dir_z, m_file3, Gtk::POS_RIGHT, 1, 1);
+  m_grid1.attach_next_to(m_dir_x, m_file1, Gtk::POS_BOTTOM, 1, 1);
+  m_grid1.attach_next_to(m_dir_y, m_file2, Gtk::POS_BOTTOM, 1, 1);
+  m_grid1.attach_next_to(m_dir_z, m_file3, Gtk::POS_BOTTOM, 1, 1);
+  m_grid1.attach_next_to(m_button, m_dir_x, Gtk::POS_BOTTOM, 1, 1);
 
   m_grid2.add(m_button_l);
   m_grid2.attach_next_to(m_button_r, m_button_l, Gtk::POS_RIGHT, 1, 1);
   m_grid2.attach_next_to(m_button_u, m_button_r, Gtk::POS_RIGHT, 1, 1);
   m_grid2.attach_next_to(m_button_d, m_button_u, Gtk::POS_RIGHT, 1, 1);
+
+  m_grid2.attach_next_to(m_scale, m_button_d, Gtk::POS_RIGHT, 1, 1);
+  m_grid2.attach_next_to(m_button_scale, m_scale, Gtk::POS_RIGHT, 1, 1);
+
+  m_grid2.attach_next_to(m_trans_x, m_button_scale, Gtk::POS_RIGHT, 1, 1);
+  m_grid2.attach_next_to(m_trans_y, m_trans_x, Gtk::POS_BOTTOM, 1, 1);
+  m_grid2.attach_next_to(m_trans_z, m_trans_y, Gtk::POS_BOTTOM, 1, 1);
+  m_grid2.attach_next_to(m_trans_amount, m_trans_x, Gtk::POS_RIGHT, 1, 1);
+  m_grid2.attach_next_to(m_button_trans, m_trans_amount, Gtk::POS_BOTTOM, 1, 1);
 
   m_area.set_size_request(600, 500);
   m_frame3.add(m_area);
@@ -122,6 +153,10 @@ Input2dWindow::Input2dWindow()
               &Input2dWindow::on_button_up) );
   m_button_d.signal_clicked().connect( sigc::mem_fun(*this,
               &Input2dWindow::on_button_down) );
+  m_button_scale.signal_clicked().connect( sigc::mem_fun(*this,
+              &Input2dWindow::on_button_scale) );
+  m_button_trans.signal_clicked().connect( sigc::mem_fun(*this,
+              &Input2dWindow::on_button_trans) );
   show_all_children();
 }
 
@@ -166,32 +201,171 @@ void Input2dWindow::on_button_submit()
 
 void Input2dWindow::on_button_right()
 {
-  // double angle =5;
+  double angle =0.01;
   // dir[0] = dir[0] + amt;
   
-  // p.direction = dir;
+  p.direction = dir;
   // cout<<p.solid.edges.size()<<endl;
   // cout<<p.solid.vertices.size()<<endl;
-  
-  // p.project();
-  // proje = p.proj;
+  vector<double> d;
+  d.push_back(0);
+  d.push_back(0);
+  d.push_back(1);
+
+  for (int i = 0; i < obj.vertices.size(); ++i)
+  {
+
+      // cout<<obj.vertices[i].x<<" "<<obj.vertices[i].y<<" "<<obj.vertices[i].z<<"    ";
+      obj.vertices[i].rotate(d,angle);
+      // cout<<obj.vertices[i].x<<" "<<obj.vertices[i].y<<" "<<obj.vertices[i].z<<" "<<obj.vertices[i].name<<endl;
+  }
+  for (int i = 0; i < obj.edges.size(); ++i)
+  {
+      obj.edges[i].rotate(d,angle);
+  }
+  p.solid = obj;
+  p.project();
+  proje = p.proj;
   m_area.queue_draw();
 }
 
 void Input2dWindow::on_button_left()
 {
+ double angle =0.01;
+  // dir[0] = dir[0] + amt;
   
+  p.direction = dir;
+  // cout<<p.solid.edges.size()<<endl;
+  // cout<<p.solid.vertices.size()<<endl;
+  vector<double> d;
+  d.push_back(0);
+  d.push_back(0);
+  d.push_back(-1);
+
+  for (int i = 0; i < obj.vertices.size(); ++i)
+  {
+
+      // cout<<obj.vertices[i].x<<" "<<obj.vertices[i].y<<" "<<obj.vertices[i].z<<"    ";
+      obj.vertices[i].rotate(d,angle);
+      // cout<<obj.vertices[i].x<<" "<<obj.vertices[i].y<<" "<<obj.vertices[i].z<<" "<<obj.vertices[i].name<<endl;
+  }
+  for (int i = 0; i < obj.edges.size(); ++i)
+  {
+      obj.edges[i].rotate(d,angle);
+  }
+  p.solid = obj;
+  p.project();
+  proje = p.proj;
+  m_area.queue_draw(); 
 }
 
 void Input2dWindow::on_button_up()
 {
+  double angle =0.01;
+  // dir[0] = dir[0] + amt;
   
+  p.direction = dir;
+  // cout<<p.solid.edges.size()<<endl;
+  // cout<<p.solid.vertices.size()<<endl;
+  vector<double> d;
+  d.push_back(1);
+  d.push_back(0);
+  d.push_back(0);
+
+  for (int i = 0; i < obj.vertices.size(); ++i)
+  {
+
+      // cout<<obj.vertices[i].x<<" "<<obj.vertices[i].y<<" "<<obj.vertices[i].z<<"    ";
+      obj.vertices[i].rotate(d,angle);
+      // cout<<obj.vertices[i].x<<" "<<obj.vertices[i].y<<" "<<obj.vertices[i].z<<" "<<obj.vertices[i].name<<endl;
+  }
+  for (int i = 0; i < obj.edges.size(); ++i)
+  {
+      obj.edges[i].rotate(d,angle);
+  }
+  p.solid = obj;
+  p.project();
+  proje = p.proj;
+  m_area.queue_draw();
 }
 
 void Input2dWindow::on_button_down()
 {
+  double angle =0.01;
+  // dir[0] = dir[0] + amt;
   
+  p.direction = dir;
+  // cout<<p.solid.edges.size()<<endl;
+  // cout<<p.solid.vertices.size()<<endl;
+  vector<double> d;
+  d.push_back(-1);
+  d.push_back(0);
+  d.push_back(0);
+
+  for (int i = 0; i < obj.vertices.size(); ++i)
+  {
+
+      // cout<<obj.vertices[i].x<<" "<<obj.vertices[i].y<<" "<<obj.vertices[i].z<<"    ";
+      obj.vertices[i].rotate(d,angle);
+      // cout<<obj.vertices[i].x<<" "<<obj.vertices[i].y<<" "<<obj.vertices[i].z<<" "<<obj.vertices[i].name<<endl;
+  }
+  for (int i = 0; i < obj.edges.size(); ++i)
+  {
+      obj.edges[i].rotate(d,angle);
+  }
+  p.solid = obj;
+  p.project();
+  proje = p.proj;
+  m_area.queue_draw();
 }
+
+void Input2dWindow::on_button_scale()
+{
+  double factor = stod(m_scale.get_text());
+  for (int i = 0; i < obj.vertices.size(); ++i)
+  {
+
+      // cout<<obj.vertices[i].x<<" "<<obj.vertices[i].y<<" "<<obj.vertices[i].z<<"    ";
+      obj.vertices[i].scale(factor);
+      // cout<<obj.vertices[i].x<<" "<<obj.vertices[i].y<<" "<<obj.vertices[i].z<<" "<<obj.vertices[i].name<<endl;
+  }
+  for (int i = 0; i < obj.edges.size(); ++i)
+  {
+      obj.edges[i].scale(factor);
+  }
+  p.solid = obj;
+  p.project();
+  proje = p.proj;
+  m_area.queue_draw(); 
+}
+
+void Input2dWindow::on_button_trans()
+{
+  double dir_x = stod(m_trans_x.get_text());
+  double dir_y = stod(m_trans_y.get_text());
+  double dir_z = stod(m_trans_z.get_text());
+  double amt = stod(m_trans_amount.get_text());
+  vector<double> d;
+  d.push_back(dir_x);
+  d.push_back(dir_y);
+  d.push_back(dir_z);
+
+  for (int i = 0; i < obj.vertices.size(); ++i)
+  {
+
+      // cout<<obj.vertices[i].x<<" "<<obj.vertices[i].y<<" "<<obj.vertices[i].z<<"    ";
+      obj.vertices[i].translate(d,amt);
+      // cout<<obj.vertices[i].x<<" "<<obj.vertices[i].y<<" "<<obj.vertices[i].z<<" "<<obj.vertices[i].name<<endl;
+  }
+  for (int i = 0; i < obj.edges.size(); ++i)
+  {
+      obj.edges[i].translate(d,amt);
+  }
+  p.solid = obj;
+  p.project();
+  proje = p.proj;
+  m_area.queue_draw(); 
+} 
 
 bool Input2dWindow::on_drawing( const Cairo::RefPtr<Cairo::Context>& cr)
 {
