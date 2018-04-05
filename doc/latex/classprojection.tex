@@ -1,0 +1,152 @@
+\hypertarget{classprojection}{}\section{projection Class Reference}
+\label{classprojection}\index{projection@{projection}}
+
+
+Collaboration diagram for projection\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=204pt]{classprojection__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void {\bfseries project} ()\hypertarget{classprojection_a6a274f48a02d222f19eb058d6e54aacf}{}\label{classprojection_a6a274f48a02d222f19eb058d6e54aacf}
+
+\item 
+\hyperlink{classVertex2d}{Vertex2d} \hyperlink{classprojection_a538f0a0ffad6b4ab6280cfa5fb3b1fdb}{project\+\_\+v} (\hyperlink{classVertex3d}{Vertex3d} v)
+\item 
+\hyperlink{classEdge2d}{Edge2d} \hyperlink{classprojection_ae6b7e6a1773df79a6a3ca0f768699eb4}{project\+\_\+e} (\hyperlink{classEdge3d}{Edge3d} e)
+\item 
+\hyperlink{classSurface2d}{Surface2d} \hyperlink{classprojection_aa13c4e1c2676b918810e03f9b63d6a90}{project\+\_\+s} (\hyperlink{classSurface3d}{Surface3d} s)
+\item 
+double {\bfseries rotation\+\_\+angle} ()\hypertarget{classprojection_a32cfa1bcfa359224c9ec75144f77a6b4}{}\label{classprojection_a32cfa1bcfa359224c9ec75144f77a6b4}
+
+\item 
+void {\bfseries separate} ()\hypertarget{classprojection_ae2ba046447d1cf822f9f27c66e65db87}{}\label{classprojection_ae2ba046447d1cf822f9f27c66e65db87}
+
+\item 
+bool {\bfseries cut\+\_\+exist} (\hyperlink{classEdge2d}{Edge2d} e1, \hyperlink{classEdge2d}{Edge2d} e2)\hypertarget{classprojection_a13461be9eeda5f3abae6fe4f0917851a}{}\label{classprojection_a13461be9eeda5f3abae6fe4f0917851a}
+
+\item 
+\hyperlink{classVertex2d}{Vertex2d} {\bfseries find\+\_\+cut} (\hyperlink{classEdge2d}{Edge2d} e1, \hyperlink{classEdge2d}{Edge2d} e2)\hypertarget{classprojection_af38d729a67938a73090e348580ab4c0d}{}\label{classprojection_af38d729a67938a73090e348580ab4c0d}
+
+\item 
+bool {\bfseries locate\+\_\+cut} (\hyperlink{classVertex2d}{Vertex2d} v, \hyperlink{classEdge2d}{Edge2d} e)\hypertarget{classprojection_aa60b56e0c985de8508a88e42b9f139e9}{}\label{classprojection_aa60b56e0c985de8508a88e42b9f139e9}
+
+\item 
+void {\bfseries sort} (vector$<$ \hyperlink{classVertex2d}{Vertex2d} $>$ \&vec)\hypertarget{classprojection_a8732f1dd6eca7f8fe4a77fc29a8287d4}{}\label{classprojection_a8732f1dd6eca7f8fe4a77fc29a8287d4}
+
+\item 
+void {\bfseries create\+\_\+edges} (vector$<$ \hyperlink{classVertex2d}{Vertex2d} $>$ v, \hyperlink{classEdge2d}{Edge2d} e, vector$<$ \hyperlink{classEdge2d}{Edge2d} $>$ \&new\+\_\+edges)\hypertarget{classprojection_af4a7703ffcb0d8065161599fc0a53a0a}{}\label{classprojection_af4a7703ffcb0d8065161599fc0a53a0a}
+
+\item 
+void {\bfseries find\+\_\+coordinates} (\hyperlink{classEdge2d}{Edge2d} e, \hyperlink{classVertex2d}{Vertex2d} v, \hyperlink{classVertex3d}{Vertex3d} v\+\_\+3d)\hypertarget{classprojection_a5ed8afe4b9ddb6934964099ac8672d08}{}\label{classprojection_a5ed8afe4b9ddb6934964099ac8672d08}
+
+\item 
+void {\bfseries set\+\_\+bool} ()\hypertarget{classprojection_a309fd47b2fe6db11791c66b9109cb72f}{}\label{classprojection_a309fd47b2fe6db11791c66b9109cb72f}
+
+\item 
+bool {\bfseries check\+\_\+hidden} (\hyperlink{classEdge2d}{Edge2d} e)\hypertarget{classprojection_a9a39c01140c7f0a850a3399413f96d88}{}\label{classprojection_a9a39c01140c7f0a850a3399413f96d88}
+
+\item 
+bool {\bfseries hid\+\_\+by\+\_\+surf} (\hyperlink{classEdge2d}{Edge2d} e, \hyperlink{classSurface3d}{Surface3d} surface)\hypertarget{classprojection_a3f423bca7add8a35708563b4bdd9c91e}{}\label{classprojection_a3f423bca7add8a35708563b4bdd9c91e}
+
+\item 
+bool {\bfseries position\+\_\+fore} (\hyperlink{classVertex3d}{Vertex3d} v, \hyperlink{classSurface3d}{Surface3d} surface)\hypertarget{classprojection_adae33f33917c169cb26a30083fc5f362}{}\label{classprojection_adae33f33917c169cb26a30083fc5f362}
+
+\item 
+bool {\bfseries inside} (\hyperlink{classEdge2d}{Edge2d} e, \hyperlink{classSurface2d}{Surface2d} surface)\hypertarget{classprojection_a4800ad8659761e94c9361c8b0687716e}{}\label{classprojection_a4800ad8659761e94c9361c8b0687716e}
+
+\item 
+int \hyperlink{classprojection_a1472f7b496d0d3d12eed1445e970cde9}{position\+\_\+vert} (\hyperlink{classVertex2d}{Vertex2d} v, \hyperlink{classSurface2d}{Surface2d} surface)
+\item 
+bool {\bfseries on\+\_\+boundary} (\hyperlink{classVertex2d}{Vertex2d} v, \hyperlink{classSurface2d}{Surface2d} surface)\hypertarget{classprojection_a99d8290040437f3b902c27772176da5d}{}\label{classprojection_a99d8290040437f3b902c27772176da5d}
+
+\item 
+bool {\bfseries on\+\_\+edge} (\hyperlink{classVertex2d}{Vertex2d} v, \hyperlink{classEdge2d}{Edge2d} e)\hypertarget{classprojection_a816e0c9c71772b298d79a1f9acbab2d1}{}\label{classprojection_a816e0c9c71772b298d79a1f9acbab2d1}
+
+\item 
+int {\bfseries ray\+\_\+casting} (\hyperlink{classVertex2d}{Vertex2d} v, \hyperlink{classSurface2d}{Surface2d} surface)\hypertarget{classprojection_a66972c8979e1cb1429230f1759c313aa}{}\label{classprojection_a66972c8979e1cb1429230f1759c313aa}
+
+\item 
+int {\bfseries poly\+\_\+vertex} (\hyperlink{classVertex2d}{Vertex2d} v, \hyperlink{classSurface2d}{Surface2d} surface)\hypertarget{classprojection_a1850fe07fbd58a9b829dd65d931a73bf}{}\label{classprojection_a1850fe07fbd58a9b829dd65d931a73bf}
+
+\item 
+int {\bfseries coincident\+\_\+edge} (\hyperlink{classVertex2d}{Vertex2d} v, \hyperlink{classSurface2d}{Surface2d} surface)\hypertarget{classprojection_af35400b0243e982cbd9f9bee109de1ae}{}\label{classprojection_af35400b0243e982cbd9f9bee109de1ae}
+
+\item 
+int {\bfseries edge\+\_\+intersect} (\hyperlink{classVertex2d}{Vertex2d} v, \hyperlink{classSurface2d}{Surface2d} surface)\hypertarget{classprojection_a24d4d8db9c4b68ffd40f9eac528bbbb1}{}\label{classprojection_a24d4d8db9c4b68ffd40f9eac528bbbb1}
+
+\item 
+int {\bfseries check\+\_\+side\+\_\+vert} (\hyperlink{classVertex2d}{Vertex2d} v, \hyperlink{classSurface2d}{Surface2d} surface)\hypertarget{classprojection_afcfbb7569b94be5df14f252a1fd62774}{}\label{classprojection_afcfbb7569b94be5df14f252a1fd62774}
+
+\item 
+int {\bfseries check\+\_\+side\+\_\+edge} (\hyperlink{classEdge2d}{Edge2d} e, \hyperlink{classSurface2d}{Surface2d} surface)\hypertarget{classprojection_afe27008445491428359590360a821b84}{}\label{classprojection_afe27008445491428359590360a821b84}
+
+\item 
+int \hyperlink{classprojection_a09a4b15e0f9a7c687a7d417f4a51aa6e}{mid\+\_\+check} (\hyperlink{classVertex2d}{Vertex2d} v1, \hyperlink{classVertex2d}{Vertex2d} v2, \hyperlink{classSurface2d}{Surface2d} surface)
+\item 
+vector$<$ double $>$ {\bfseries cross} (vector$<$ double $>$ v1, vector$<$ double $>$ v2)\hypertarget{classprojection_a1bee2adde0b5145710546d870bb39303}{}\label{classprojection_a1bee2adde0b5145710546d870bb39303}
+
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classobject3d}{object3d} {\bfseries solid}\hypertarget{classprojection_af10b79e4b507bc7242bcf875d86e3696}{}\label{classprojection_af10b79e4b507bc7242bcf875d86e3696}
+
+\item 
+\hyperlink{classobject2d}{object2d} {\bfseries proj}\hypertarget{classprojection_ae0d15d990e6573d75ff4d092fbd33679}{}\label{classprojection_ae0d15d990e6573d75ff4d092fbd33679}
+
+\item 
+vector$<$ double $>$ {\bfseries direction}\hypertarget{classprojection_a59d3d3752fef90fece215a4edae537b2}{}\label{classprojection_a59d3d3752fef90fece215a4edae537b2}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Member Function Documentation}
+\index{projection@{projection}!mid\+\_\+check@{mid\+\_\+check}}
+\index{mid\+\_\+check@{mid\+\_\+check}!projection@{projection}}
+\subsubsection[{\texorpdfstring{mid\+\_\+check(\+Vertex2d v1, Vertex2d v2, Surface2d surface)}{mid_check(Vertex2d v1, Vertex2d v2, Surface2d surface)}}]{\setlength{\rightskip}{0pt plus 5cm}int projection\+::mid\+\_\+check (
+\begin{DoxyParamCaption}
+\item[{{\bf Vertex2d}}]{v1, }
+\item[{{\bf Vertex2d}}]{v2, }
+\item[{{\bf Surface2d}}]{surface}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classprojection_a09a4b15e0f9a7c687a7d417f4a51aa6e}{}\label{classprojection_a09a4b15e0f9a7c687a7d417f4a51aa6e}
+returns the location of mid-\/point of v1 and v2\index{projection@{projection}!position\+\_\+vert@{position\+\_\+vert}}
+\index{position\+\_\+vert@{position\+\_\+vert}!projection@{projection}}
+\subsubsection[{\texorpdfstring{position\+\_\+vert(\+Vertex2d v, Surface2d surface)}{position_vert(Vertex2d v, Surface2d surface)}}]{\setlength{\rightskip}{0pt plus 5cm}int projection\+::position\+\_\+vert (
+\begin{DoxyParamCaption}
+\item[{{\bf Vertex2d}}]{v, }
+\item[{{\bf Surface2d}}]{surface}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classprojection_a1472f7b496d0d3d12eed1445e970cde9}{}\label{classprojection_a1472f7b496d0d3d12eed1445e970cde9}
+returns 0 if vert outside, 1 if inside, 2 if on the line\index{projection@{projection}!project\+\_\+e@{project\+\_\+e}}
+\index{project\+\_\+e@{project\+\_\+e}!projection@{projection}}
+\subsubsection[{\texorpdfstring{project\+\_\+e(\+Edge3d e)}{project_e(Edge3d e)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Edge2d} projection\+::project\+\_\+e (
+\begin{DoxyParamCaption}
+\item[{{\bf Edge3d}}]{e}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classprojection_ae6b7e6a1773df79a6a3ca0f768699eb4}{}\label{classprojection_ae6b7e6a1773df79a6a3ca0f768699eb4}
+\index{projection@{projection}!project\+\_\+s@{project\+\_\+s}}
+\index{project\+\_\+s@{project\+\_\+s}!projection@{projection}}
+\subsubsection[{\texorpdfstring{project\+\_\+s(\+Surface3d s)}{project_s(Surface3d s)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Surface2d} projection\+::project\+\_\+s (
+\begin{DoxyParamCaption}
+\item[{{\bf Surface3d}}]{s}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classprojection_aa13c4e1c2676b918810e03f9b63d6a90}{}\label{classprojection_aa13c4e1c2676b918810e03f9b63d6a90}
+\index{projection@{projection}!project\+\_\+v@{project\+\_\+v}}
+\index{project\+\_\+v@{project\+\_\+v}!projection@{projection}}
+\subsubsection[{\texorpdfstring{project\+\_\+v(\+Vertex3d v)}{project_v(Vertex3d v)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Vertex2d} projection\+::project\+\_\+v (
+\begin{DoxyParamCaption}
+\item[{{\bf Vertex3d}}]{v}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classprojection_a538f0a0ffad6b4ab6280cfa5fb3b1fdb}{}\label{classprojection_a538f0a0ffad6b4ab6280cfa5fb3b1fdb}
+Finds out the projection of a 3D vertex given a plane of projection by rotating the plane to coincide it with x-\/y plane.
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+backend\+\_\+header.\+h\end{DoxyCompactItemize}
